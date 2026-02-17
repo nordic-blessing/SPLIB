@@ -18,7 +18,7 @@
 /* Devices  -----------------------------------------------*/
 #define USE_SPLIB_CONMMAND          0
 #define USE_SPLIB_DJI               0
-#define USE_SPLIB_EREMPOWER         0
+#define USE_SPLIB_DREMPOWER         0
 #define USE_SPLIB_LASER_L1S         0
 #define USE_SPLIB_REMOTER_SBUS      0
 #define USE_SPLIB_ROBOSTRIDE        0
@@ -58,7 +58,7 @@
 #if USE_SPLIB_DJI
     #include "Devices/Dji/M3508.h"
 #endif
-#if USE_SPLIB_EREMPOWER
+#if USE_SPLIB_DREMPOWER
     #include "Devices/DrEmpower/DrEmpower_can.h"
 #endif
 #if USE_SPLIB_LASER_L1S
