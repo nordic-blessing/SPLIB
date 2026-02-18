@@ -182,7 +182,7 @@ void CAN_SendExtData(CAN_HandleTypeDef* hcan, uint16_t ExtId, uint8_t* pData, ui
     CAN_TxHeader.DLC = Len;
     CAN_TxHeader.TransmitGlobalTime = DISABLE;
 
-    if (HAL_CAN_GetTxMailboxesFreeLevel(&hcan) > 0) {
+    if (HAL_CAN_GetTxMailboxesFreeLevel(hcan) > 0) {
         HAL_CAN_AddTxMessage(hcan, &CAN_TxHeader, pData, NULL);
     }
 #endif

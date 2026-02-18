@@ -6,7 +6,7 @@
 
 #include "splib_config.h"
 
-#define USE_FREERTOS    1
+#define USE_FREERTOS    0
 
 #if USE_FREERTOS
     #define DELAY(x)        osDelay(x)

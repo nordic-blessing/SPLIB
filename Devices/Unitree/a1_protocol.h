@@ -4,6 +4,8 @@
 #ifndef DEVICE_UNITREE_A1_PROTOCOL_H
 #define DEVICE_UNITREE_A1_PROTOCOL_H
 
+#include <stdint.h>
+
 // 发送用单个数据数据结构
 #pragma pack(1)
 

@@ -5,7 +5,9 @@
 #ifndef ALGORITHM_TRAJPLANNER_H
 #define ALGORITHM_TRAJPLANNER_H
 
-#include "main.h"
+#include <stdint.h>
+#include <math.h>
+#include <stdbool.h>
 
 typedef struct {
     float current;  // 当前

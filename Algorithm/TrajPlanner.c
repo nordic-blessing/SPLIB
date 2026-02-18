@@ -1,6 +1,8 @@
-#include "TrajPlanner.h"
+#include "splib.h"
 
-#define TRAJ_SIGMOID    1
+#if USE_SPLIB_TRAJPLANNER
+
+#include "TrajPlanner.h"
 
 /**
  * 曲线规划初始化
@@ -94,3 +96,5 @@ void Traj_SetTarget(Traj_t* traj, float target) {
     }
     traj->arrived = true;
 }
+
+#endif
