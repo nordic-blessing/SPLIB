@@ -17,7 +17,8 @@ ProtocolHandler Laser_L1s = {
         .callback = Laser_L1s_Receive,
 
         .buffer_index = 0,
-        .header_found = 0
+        .header_found = false,
+        .buffer = {0}
 };
 
 void Laser_L1s_Receive(uint8_t *data) {

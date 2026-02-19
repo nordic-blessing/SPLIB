@@ -19,7 +19,8 @@ ProtocolHandler remote_sbus={
         .callback = Remoter_Receive,
 
         .buffer_index = 0,
-        .header_found = 0
+        .header_found = false,
+        .buffer = {0}
 };
 
 void Remoter_Receive(uint8_t* data) {

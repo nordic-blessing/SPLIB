@@ -19,7 +19,7 @@ ProtocolHandler vofa_debug={
         .callback = Debug_Receive,
 
         .buffer_index = 0,
-        .header_found = 0,
+        .header_found = false,
         .buffer = {0}
 };
 

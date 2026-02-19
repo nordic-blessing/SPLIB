@@ -19,7 +19,7 @@ ProtocolHandler visual_uart={
         .callback = Visual_Receive,
 
         .buffer_index = 0,
-        .header_found = 0,
+        .header_found = false,
         .buffer = {0}
 };
 
