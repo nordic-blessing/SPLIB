@@ -106,16 +106,16 @@ void CAN_Filter_Mask_Config(CAN_HandleTypeDef* hcan, uint8_t para, uint32_t Id, 
 
     if ((para >> 1 & 0x01)) {
         /* ExtId */
-        canFliter.FilterIdHigh = (Id << 3) << 16;
+        canFliter.FilterIdHigh = (Id << 3);
         canFliter.FilterIdLow = (Id << 3) | (((para >> 1) & 0x01) << 2) | ((para & 0x01) << 1);
-        canFliter.FilterMaskIdHigh = (Mask << 3) << 16;
-        canFliter.FilterMaskIdLow = (Mask << 3) | (((para >> 1) & 0x01) << 2) | ((para & 0x01) << 1);
+        canFliter.FilterMaskIdHigh = (Mask << 3);
+        canFliter.FilterMaskIdLow = (Mask << 3) | (1 << 2) | (1 << 1);
     } else {
         /* StdId */
-        canFliter.FilterIdHigh = (Id << 5) << 16;
+        canFliter.FilterIdHigh = (Id << 5);
         canFliter.FilterIdLow = (((para >> 1) & 0x01) << 2) | ((para & 0x01) << 1);
-        canFliter.FilterMaskIdHigh = (Mask << 5) << 16;
-        canFliter.FilterMaskIdLow = (((para >> 1) & 0x01) << 2) | ((para & 0x01) << 1);
+        canFliter.FilterMaskIdHigh = (Mask << 5);
+        canFliter.FilterMaskIdLow = (1 << 2) | (1 << 1);
     }
     canFliter.FilterFIFOAssignment = (para >> 2) ? CAN_FILTER_FIFO1 : CAN_FILTER_FIFO0;
     canFliter.FilterBank = para >> 3;
