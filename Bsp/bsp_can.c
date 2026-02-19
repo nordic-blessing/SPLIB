@@ -55,16 +55,12 @@ void CAN_Start_IT(CAN_HandleTypeDef* hcan, uint8_t FIFOx, void (*pFunc)(CAN_RxBu
             pCAN1_FIFO0RxCpltCallback = pFunc;
         } else if (hcan->Instance == CAN2) {
             pCAN2_FIFO0RxCpltCallback = pFunc;
-        } else if (hcan->Instance == CAN3) {
-            pCAN3_FIFO0RxCpltCallback = pFunc;
         }
     }else if(FIFOx == CanFifo_1){
         if (hcan->Instance == CAN1) {
             pCAN1_FIFO1RxCpltCallback = pFunc;
         } else if (hcan->Instance == CAN2) {
             pCAN2_FIFO1RxCpltCallback = pFunc;
-        } else if (hcan->Instance == CAN3) {
-            pCAN3_FIFO1RxCpltCallback = pFunc;
         }
     }
 
@@ -252,7 +248,7 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 #endif
 
 #if USE_SPLIB_CAN
-void HAL_CAN_RxFifo0FullCallback(CAN_HandleTypeDef *hcan) {
+void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
     if (hcan->Instance == CAN1) {
         /*!< CAN receive buffer */
         CAN_RxBuffer CAN1_RxBuffer;
@@ -315,7 +311,7 @@ void HAL_FDCAN_RxFifo1Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo1ITs)
 #endif
 
 #if USE_SPLIB_CAN
-void HAL_CAN_RxFifo1FullCallback(CAN_HandleTypeDef *hcan) {
+void HAL_CAN_RxFifo1MsgPendingCallback(CAN_HandleTypeDef *hcan) {
     if (hcan->Instance == CAN1) {
         /*!< CAN receive buffer */
         CAN_RxBuffer CAN1_RxBuffer;
