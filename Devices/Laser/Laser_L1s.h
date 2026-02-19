@@ -23,3 +23,5 @@ extern uint32_t Laser_distance;
 void Laser_L1s_Receive(uint8_t *data);
 
 #endif //DEVICE_LASER_L1S_H
+
+/************************ COPYRIGHT(C) Pangolin Robot Lab **************************/

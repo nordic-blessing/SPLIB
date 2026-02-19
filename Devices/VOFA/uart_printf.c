@@ -5,11 +5,18 @@
 
 #if USE_SPLIB_VOFA_PRINTF
 
+/* Includes ------------------------------------------------------------------*/
 #include "uart_printf.h"
 
+/* Private define ------------------------------------------------------------*/
 #define TX_BUF_SIZE 256
 
+/* Private variables ---------------------------------------------------------*/
 uint8_t send_buf[TX_BUF_SIZE];
+
+/* Private type --------------------------------------------------------------*/
+/* Private function declarations ---------------------------------------------*/
+/* function prototypes -------------------------------------------------------*/
 
 /**
  * 用于串口调试，向电脑发送数据
@@ -24,7 +31,9 @@ void uart_printf(const char *format, ...) {
     length = vsnprintf((char *) send_buf, TX_BUF_SIZE, (const char *) format, args);
     va_end(args);
 
-    HAL_UART_Transmit(&PRINTF_UART, (uint8_t *) send_buf, length,50);
+    HAL_UART_Transmit(&PRINTF_UART, (uint8_t *) send_buf, length, 50);
 }
 
 #endif
+
+/************************ COPYRIGHT(C) Pangolin Robot Lab **************************/

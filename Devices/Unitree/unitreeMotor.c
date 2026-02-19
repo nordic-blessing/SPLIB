@@ -10,7 +10,7 @@
 
 /// @brief 将发送给电机的浮点参数转换为定点类型参数
 /// @param motor_s 要转换的电机指令结构体
-void unitree_modify_data(MotorCmd_t *motor_s)
+void Unitree_modify_data(MotorCmd_t* motor_s)
 {
     if(motor_s->motorType == A1){
 		motor_s->A1B1_motor_send_data.head.start[0] = 0xFE;
@@ -60,7 +60,7 @@ void unitree_modify_data(MotorCmd_t *motor_s)
 
 /// @brief 将接收到的定点类型原始数据转换为浮点参数类型
 /// @param motor_r 要转换的电机反馈结构体
-uint8_t unitree_extract_data(MotorData_t* motor_r)
+uint8_t Unitree_extract_data(MotorData_t* motor_r)
 {
 	if(motor_r->motorType == GO_M8010_6){
 		if (motor_r->GO_M8010_6_motor_recv_data.head[0] != 0xFD || motor_r->GO_M8010_6_motor_recv_data.head[1] != 0xEE){

@@ -1,13 +1,20 @@
-    //
+//
 // Created by Icol_Lee on 2025/10/3.
 //
 #include "splib.h"
 
 #if USE_SPLIB_VESC
 
+/* Includes ------------------------------------------------------------------*/
 #include "VESC.h"
 
+/* Private define ------------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
 uint8_t vesc_data[4] = {0};
+
+/* Private type --------------------------------------------------------------*/
+/* Private function declarations ---------------------------------------------*/
+/* function prototypes -------------------------------------------------------*/
 
 /**
  * 发送控制信息
@@ -38,3 +45,5 @@ void vesc_send(enum VescMode mode, uint16_t id, float value) {
 }
 
 #endif
+
+/************************ COPYRIGHT(C) Pangolin Robot Lab **************************/

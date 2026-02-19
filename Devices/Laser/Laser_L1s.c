@@ -6,8 +6,11 @@
 
 #if USE_SPLIB_LASER_L1S
 
+/* Includes ------------------------------------------------------------------*/
 #include "Laser_L1s.h"
 
+/* Private define ------------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
 uint32_t Laser_distance;
 ProtocolHandler Laser_L1s = {
         .package_length = Laser_L1s_Rx_DATA_LENGTH,
@@ -20,6 +23,10 @@ ProtocolHandler Laser_L1s = {
         .header_found = false,
         .buffer = {0}
 };
+
+/* Private type --------------------------------------------------------------*/
+/* Private function declarations ---------------------------------------------*/
+/* function prototypes -------------------------------------------------------*/
 
 void Laser_L1s_Receive(uint8_t *data) {
     uint32_t temp;
@@ -34,3 +41,5 @@ void Laser_L1s_Receive(uint8_t *data) {
 }
 
 #endif
+
+/************************ COPYRIGHT(C) Pangolin Robot Lab **************************/

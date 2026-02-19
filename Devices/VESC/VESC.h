@@ -2,8 +2,8 @@
 // Created by Icol_Lee on 2025/10/3.
 //
 
-#ifndef DEVICE_N5065_H
-#define DEVICE_N5065_H
+#ifndef DEVICE_VESC_H
+#define DEVICE_VESC_H
 
 #include <stdint.h>
 
@@ -46,4 +46,6 @@ enum VescMode {
 
 void vesc_send(enum VescMode mode, uint16_t id, float value);
 
-#endif //N5065_N5065_H
+#endif //DEVICE_VESC_H
+
+/************************ COPYRIGHT(C) Pangolin Robot Lab **************************/

@@ -2,8 +2,8 @@
 // Created by Icol_Lee on 2026/1/30.
 //
 
-#ifndef Device_COMMAND_CAN_H
-#define Device_COMMAND_CAN_H
+#ifndef DEVICE_COMMAND_CAN_H
+#define DEVICE_COMMAND_CAN_H
 
 /* Includes ------------------------------------------------------------------*/
 #if USE_SPLIB_FDCAN
@@ -24,4 +24,6 @@
 /* Exported function declarations ---------------------------------------------*/
 void command_transmit(uint8_t *pData);
 
-#endif //Device_COMMAND_CAN_H
+#endif //DEVICE_COMMAND_CAN_H
+
+ /************************ COPYRIGHT(C) Pangolin Robot Lab **************************/

@@ -1,6 +1,21 @@
-//
-// Created by Icol_Lee on 2025/9/21.
-//
+/**
+  ******************************************************************************
+  @file     bsp_uart.h
+  @brief    STM32(HAL) uart私有协议接收驱动： 
+                - 串口中断接收初始化（支持多串口设备）
+                - 串口中断回调分发
+                - 私有协议帧头帧尾检测（带长度校验）及回调触发
+  @author   Icol Boom <icolboom4@gmail.com>
+  @date     2025-03-15 (Created) | 2026-02-19 (Last modified)
+  @version  v1.0
+  ------------------------------------------------------------------------------
+  CHANGE LOG :
+    - 2026-02-19 [v1.0] Icol Boom: 创建初始版本，完成初步测试
+  ******************************************************************************
+  Copyright (c) 2026 ~ -, Sichuan University Pangolin Robot Lab.
+  All rights reserved.
+  ******************************************************************************
+*/
 
 #ifndef BSP_UART_H
 #define BSP_UART_H
@@ -47,8 +62,9 @@ typedef struct {
 #endif
 
 /* Exported function declarations ---------------------------------------------*/
-void usart_IT_protocol_init(void);
+void uart_IT_protocol_init(void);
 void uart_RX_decode(UART_HandleTypeDef *huart, ProtocolHandler *protocolHandler);
 
-
 #endif //BSP_UART_H
+
+/************************ COPYRIGHT(C) Pangolin Robot Lab **************************/

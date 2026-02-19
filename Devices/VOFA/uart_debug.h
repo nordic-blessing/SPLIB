@@ -35,3 +35,5 @@ extern Debug_t debugData;
 void Debug_Receive(uint8_t* data);
 
 #endif //DEVICE_UART_DEBUG_H
+
+/************************ COPYRIGHT(C) Pangolin Robot Lab **************************/

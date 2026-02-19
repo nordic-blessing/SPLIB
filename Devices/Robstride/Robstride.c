@@ -1,13 +1,54 @@
-//
-// Created by Icol_Lee on 2025/11/26.
-//
+/**
+  ******************************************************************************
+  @file     Robstride.c
+  @brief    RobStride电机CAN通信驱动： 
+                - 电机初始化（配置CAN ID/通信参数）
+                - 电机数据解析（角度/速度/扭矩/温度等状态读取）
+                - 电机控制指令（使能/失能/零位设置/CAN ID修改）
+                - 多模式运动控制（力矩/速度/位置/CSP/PP插补）
+                - 参数读写（单个参数读取/写入/数据保存/波特率修改）
+  @author   Icol Boom <icolboom4@gmail.com>
+  @date     2025-11-26 (Created) | 2026-02-19 (Last modified)
+  @version  v1.0
+  ------------------------------------------------------------------------------
+  CHANGE LOG :
+    - 2026-02-19 [v1.0] Icol Boom: 创建初始版本
+  ------------------------------------------------------------------------------
+  @example 
+    - 电机初始化 : 调用`RobStride_Motor_Init()`, 配置电机CAN ID
+        `RobStride_Motor_Init(&EL05, 0x01)` // 初始化EL05电机，CAN ID设为0x01
+    - 电机使能 : 调用`RobStride_Enable_Motor()`, 启用电机
+        `RobStride_Enable_Motor(&EL05)` // 使能EL05电机
+    - 力矩模式控制 : 调用`RobStride_Motor_move_control()`, 设定力矩/角度/速度等参数
+        `RobStride_Motor_move_control(&EL05, 2.0f, 0.0f, 0.0f, 100.0f, 1.0f)` // 力矩2Nm，角度0rad，速度0rad/s，Kp=100，Kd=1
+    - 位置模式控制 : 调用`RobStride_Motor_CSP_control()`, 设定目标角度和限速
+        `RobStride_Motor_CSP_control(&EL05, 3.14f, 10.0f)` // 目标角度3.14rad，最大速度10rad/s
+    - 主动读取电机参数 : 调用`Get_RobStride_Motor_parameter()`, 读取指定索引参数
+        `Get_RobStride_Motor_parameter(&EL05, 0x7005)` // 读取电机运行模式参数
+    - 获取电机反馈数据 ：电机控制语句都会触发电机的主动反馈
+        `float motor_angle = EL05.Pos_Info.Angle` // 获取电机反馈角度
+  ------------------------------------------------------------------------------
+  @attention
+    - 请根据实际项目需求，在`Robstride.h`中添加`RobStride_Motor`实例化
+    - 所有控制参数需在限定范围（如力矩-6~6Nm、角度-12.57~12.57rad）内，超出会自动限幅
+    - 修改代码后需同步更新版本号、最后修改日期及CHANGE LOG，请务必保证注释清晰明确地
+        让后人知晓如何使用该驱动
+    - 驱动依赖于`bsp_can.c/h`，请务必在`splib_config.h`中使能`USE_SPLIB_CAN`或
+        `USE_SPLIB_FDCAN`
+  ******************************************************************************
+  Copyright (c) 2026 ~ -, Sichuan University Pangolin Robot Lab.
+  All rights reserved.
+  ******************************************************************************
+*/
 
 #include "splib.h"
 
 #if USE_SPLIB_ROBOSTRIDE
 
+/* Includes ------------------------------------------------------------------*/
 #include "Robstride.h"
 
+/* Private define ------------------------------------------------------------*/
 #define P_MIN (-12.57f)
 #define P_MAX 12.57f
 #define V_MIN (-50.0f)
@@ -19,7 +60,16 @@
 #define T_MIN (-6.0f)
 #define T_MAX 6.0f
 
+/* Private variables ---------------------------------------------------------*/
 RobStride_Motor EL05;
+
+/* Private type --------------------------------------------------------------*/
+/* Private function declarations ---------------------------------------------*/
+float uint16_to_float(uint16_t x, float x_min, float x_max, int bits);
+int float_to_uint(float x, float x_min, float x_max, int bits);
+float Byte_to_float(const uint8_t* byteData);
+
+/* function prototypes -------------------------------------------------------*/
 
 // 初始化函数
 void RobStride_Motor_Init(RobStride_Motor *motor, uint8_t CAN_Id) {
@@ -134,7 +184,7 @@ void RobStride_Motor_Analysis(RobStride_Motor *motor, uint8_t *DataFrame, uint32
 void RobStride_Get_CAN_ID(RobStride_Motor *motor) {
     uint32_t Id = Communication_Type_Get_ID << 24 | motor->Master_CAN_ID << 8 | motor->CAN_ID;
     uint8_t txData[8] = {0};
-    CAN_SendExtData(&Robostride_hcan, Id, txData, 8);
+    CAN_SendExtData(&Robostride_hcan, Id, txData, FDCAN_DLC_BYTES_8);
 }
 
 /**
@@ -178,7 +228,7 @@ void RobStride_Motor_move_control(RobStride_Motor *motor, float Torque, float An
     txData[6] = float_to_uint(motor->Motor_Set_All.set_Kd, KD_MIN, KD_MAX, 16) >> 8;
     txData[7] = float_to_uint(motor->Motor_Set_All.set_Kd, KD_MIN, KD_MAX, 16);
 
-    CAN_SendExtData(&Robostride_hcan, Id, txData, 8);
+    CAN_SendExtData(&Robostride_hcan, Id, txData, FDCAN_DLC_BYTES_8);
 }
 
 /**
@@ -189,7 +239,7 @@ void RobStride_Enable_Motor(RobStride_Motor *motor) {
     uint32_t Id = Communication_Type_MotorEnable << 24 | motor->Master_CAN_ID << 8 | motor->CAN_ID;
     uint8_t txData[8] = {0};
 
-    CAN_SendExtData(&Robostride_hcan, Id, txData, 8);
+    CAN_SendExtData(&Robostride_hcan, Id, txData, FDCAN_DLC_BYTES_8);
 }
 
 /**
@@ -203,7 +253,7 @@ void RobStride_Disable_Motor(RobStride_Motor *motor, uint8_t clear_error) {
 
     txData[0] = clear_error;
 
-    CAN_SendExtData(&Robostride_hcan, Id, txData, 8);
+    CAN_SendExtData(&Robostride_hcan, Id, txData, FDCAN_DLC_BYTES_8);
     Set_RobStride_Motor_parameter(motor, 0X7005, move_control_mode);
 }
 
@@ -218,7 +268,7 @@ void Set_ZeroPos(RobStride_Motor *motor) {
     txData[0] = 1;
 
     RobStride_Disable_Motor(motor, 0);
-    CAN_SendExtData(&Robostride_hcan, Id, txData, 8);
+    CAN_SendExtData(&Robostride_hcan, Id, txData, FDCAN_DLC_BYTES_8);
     RobStride_Enable_Motor(motor);
 }
 
@@ -232,7 +282,7 @@ void Set_CAN_ID(RobStride_Motor *motor, uint8_t Set_CAN_ID) {
     uint8_t txData[8] = {0};
 
     RobStride_Disable_Motor(motor, 0);
-    CAN_SendExtData(&Robostride_hcan, Id, txData, 8);
+    CAN_SendExtData(&Robostride_hcan, Id, txData, FDCAN_DLC_BYTES_8);
     RobStride_Enable_Motor(motor);
 }
 
@@ -248,7 +298,7 @@ void Get_RobStride_Motor_parameter(RobStride_Motor *motor, uint16_t Index) {
     txData[0] = Index;
     txData[1] = Index >> 8;
 
-    CAN_SendExtData(&Robostride_hcan, Id, txData, 8);
+    CAN_SendExtData(&Robostride_hcan, Id, txData, FDCAN_DLC_BYTES_8);
 }
 
 /**
@@ -273,7 +323,7 @@ void Set_RobStride_Motor_parameter(RobStride_Motor *motor, uint16_t Index, float
         txData[7] = f_h.hexValue >> 24;
     }
 
-    CAN_SendExtData(&Robostride_hcan, Id, txData, 8);
+    CAN_SendExtData(&Robostride_hcan, Id, txData, FDCAN_DLC_BYTES_8);
 }
 
 /**
@@ -284,7 +334,7 @@ void RobStride_Motor_MotorDataSave(RobStride_Motor *motor) {
     uint32_t Id = Communication_Type_MotorDataSave << 24 | motor->Master_CAN_ID << 8 | motor->CAN_ID;
     uint8_t txData[8] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
 
-    CAN_SendExtData(&Robostride_hcan, Id, txData, 8);
+    CAN_SendExtData(&Robostride_hcan, Id, txData, FDCAN_DLC_BYTES_8);
 }
 
 /**
@@ -296,7 +346,7 @@ void RobStride_Motor_BaudRateChange(RobStride_Motor *motor, uint8_t F_CMD) {
     uint32_t Id = Communication_Type_BaudRateChange << 24 | motor->Master_CAN_ID << 8 | motor->CAN_ID;
     uint8_t txData[8] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, F_CMD, 00};
 
-    CAN_SendExtData(&Robostride_hcan, Id, txData, 8);
+    CAN_SendExtData(&Robostride_hcan, Id, txData, FDCAN_DLC_BYTES_8);
 }
 
 /**
@@ -308,7 +358,7 @@ void RobStride_Motor_ProactiveEscalationSet(RobStride_Motor *motor, uint8_t F_CM
     uint32_t Id = Communication_Type_ProactiveEscalationSet << 24 | motor->Master_CAN_ID << 8 | motor->CAN_ID;
     uint8_t txData[8] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, F_CMD, 0x00};
 
-    CAN_SendExtData(&Robostride_hcan, Id, txData, 8);
+    CAN_SendExtData(&Robostride_hcan, Id, txData, FDCAN_DLC_BYTES_8);
 }
 
 /**
@@ -444,3 +494,5 @@ void RobStride_SetMode(RobStride_Motor *motor, uint8_t mode) {
 }
 
 #endif
+
+/************************ COPYRIGHT(C) Pangolin Robot Lab **************************/

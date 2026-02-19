@@ -1,6 +1,23 @@
-//
-// Created by Icol_Lee on 2025/11/26.
-//
+/**
+  ******************************************************************************
+  @file     Robstride.h
+  @brief    RobStride电机CAN通信驱动： 
+                - 电机初始化（配置CAN ID/通信参数）
+                - 电机数据解析（角度/速度/扭矩/温度等状态读取）
+                - 电机控制指令（使能/失能/零位设置/CAN ID修改）
+                - 多模式运动控制（力矩/速度/位置/CSP/PP插补）
+                - 参数读写（单个参数读取/写入/数据保存/波特率修改）
+  @author   Icol Boom <icolboom4@gmail.com>
+  @date     2025-11-26 (Created) | 2026-02-19 (Last modified)
+  @version  v1.0
+  ------------------------------------------------------------------------------
+  CHANGE LOG :
+    - 2026-02-19 [v1.0] Icol Boom: 创建初始版本
+  ******************************************************************************
+  Copyright (c) 2026 ~ -, Sichuan University Pangolin Robot Lab.
+  All rights reserved.
+  ******************************************************************************
+*/
 
 #ifndef DEVICE_ROBOSTRIDE_H
 #define DEVICE_ROBOSTRIDE_H
@@ -66,6 +83,8 @@ typedef struct {
 } RobStride_data_read_write;
 
 /* Exported macros -----------------------------------------------------------*/
+extern RobStride_Motor EL05;
+
 /* Exported types ------------------------------------------------------------*/
 // 电机位置信息结构体
 typedef struct {
@@ -105,13 +124,9 @@ typedef struct {
 } RobStride_Motor;
 
 /* Exported variables --------------------------------------------------------*/
-extern RobStride_Motor EL05;
 
 /* Exported function declarations --------------------------------------------*/
 void RobStride_Motor_Init(RobStride_Motor *motor, uint8_t CAN_Id);
-float uint16_to_float(uint16_t x, float x_min, float x_max, int bits);
-int float_to_uint(float x, float x_min, float x_max, int bits);
-float Byte_to_float(const uint8_t* byteData);
 //uint8_t mapFaults(uint16_t fault16);
 void RobStride_Motor_Analysis(RobStride_Motor *motor, uint8_t *DataFrame, uint32_t ID_ExtId);
 
@@ -136,3 +151,5 @@ void RobStride_Motor_Set_Zero_control(RobStride_Motor *motor);
 void RobStride_SetMode(RobStride_Motor *motor, uint8_t mode);
 
 #endif //DEVICE_ROBOSTRIDE_H
+
+/************************ COPYRIGHT(C) Pangolin Robot Lab **************************/

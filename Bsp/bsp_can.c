@@ -1,18 +1,57 @@
-//
-// Created by Icol_Lee on 2025/9/27.
-//
+/**
+  ******************************************************************************
+  @file     bsp_can.c
+  @brief    STM32(HAL) CAN/FDCAN驱动： 
+                - 滤波器掩码配置
+                - 中断回调注册
+                - 标准/扩展帧发送
+  @author   Icol Boom <icolboom4@gmail.com>
+  @date     2025-09-27 (Created) | 2026-02-19 (Last modified)
+  @version  v1.0
+  ------------------------------------------------------------------------------
+  CHANGE LOG :
+    - 2026-02-19 [v1.0] Icol Boom: 创建初始版本，完成初步测试
+  ------------------------------------------------------------------------------
+  @example
+    - 开启CAN : 调用`CAN_Start_IT()`，开启CAN，使能中断，并配置CAN接收处理函数
+        `CAN_Start_IT(&hcan1, CanFIFO_0，CAN1_RxCallback)` // 注册接收回调至FIFO0，
+        并开启CAN外设及中断
+    - 滤波配置 : 调用`CAN_Filter_Mask_Config`进行滤波器配置（需注意配置格式）
+        `CAN_Filter_Mask_Config(&hcan1, CanFilter_0|CanFIFO_0|Can_StdId|Can_DataType, 0x123, 0x3FF)` // 过滤器0，精准匹配标准ID 0x123的数据帧，分流至FIFO0
+    - 数据发送 : 调用`CAN_SendStdData()`发送标准帧/`CAN_SendExtData()`发送扩展帧
+        `CAN_SendStdData(&hcan1, 0x123, data, 2)` // 标准帧ID 0x123 发送2字节的data数据
+        `CAN_SendExtData(...)`
+  ------------------------------------------------------------------------------
+  @attention
+    - 使用前请在`splib_config.h`中使能`USE_SPLIB_CAN`或`USE_SPLIB_FDCAN`
+    - 回调函数运行在中断上下文，禁止使用延时、打印、大量运算等阻塞性操作
+    - 修改代码后需同步更新版本号、最后修改日期及CHANGE LOG，请务必保证注释清晰明确地
+    让后人知晓如何使用该驱动
+    - 本驱动仅测试了STM32F4/G4系列的部分型号，依赖STM32 HAL库底层初始化
+  ******************************************************************************
+  Copyright (c) 2026 ~ -, Sichuan University Pangolin Robot Lab.
+  All rights reserved.
+  ******************************************************************************
+*/
 #include "splib.h"
 
 #if USE_SPLIB_CAN | USE_SPLIB_FDCAN
 
+/* Includes ------------------------------------------------------------------*/
 #include "bsp_can.h"
 
+/* Private define ------------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
 static void (*pCAN1_FIFO0RxCpltCallback)(CAN_RxBuffer *);
 static void (*pCAN2_FIFO0RxCpltCallback)(CAN_RxBuffer *);
 static void (*pCAN3_FIFO0RxCpltCallback)(CAN_RxBuffer *);
 static void (*pCAN1_FIFO1RxCpltCallback)(CAN_RxBuffer *);
 static void (*pCAN2_FIFO1RxCpltCallback)(CAN_RxBuffer *);
 static void (*pCAN3_FIFO1RxCpltCallback)(CAN_RxBuffer *);
+
+/* Private type --------------------------------------------------------------*/
+/* Private function declarations ---------------------------------------------*/
+/* function prototypes -------------------------------------------------------*/
 
 /**
  * 开启CAN中断，设置回调函数
@@ -335,3 +374,5 @@ void HAL_CAN_RxFifo1MsgPendingCallback(CAN_HandleTypeDef *hcan) {
 #endif
 
 #endif
+
+/************************ COPYRIGHT(C) Pangolin Robot Lab **************************/

@@ -1,7 +1,3 @@
-//
-// Created by Icol_Lee on 2025/9/20.
-//
-
 #ifndef SPLIB_CONFIG_H
 #define SPLIB_CONFIG_H
 
@@ -94,3 +90,5 @@
 /* Devices header end */
 
 #endif //SPLIB_CONFIG_H
+
+/************************ COPYRIGHT(C) Pangolin Robot Lab **************************/

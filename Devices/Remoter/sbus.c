@@ -6,22 +6,29 @@
 
 #if USE_SPLIB_REMOTER_SBUS
 
+/* Includes ------------------------------------------------------------------*/
 #include "sbus.h"
 
+/* Private define ------------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
 Remoter_sbus RemoterData;
 ProtocolHandler remote_sbus={
-        .package_length = REMOTER_DATA_LENGTH,
-        .header = REMOTER_HEADER,
-        .header_length = REMOTER_HEADER_LENGTH,
-        .tail_flag = 1,
-        .tail = REMOTER_TAIL,
-        .tail_length = REMOTER_TAIL_LENGTH,
-        .callback = Remoter_Receive,
-
-        .buffer_index = 0,
-        .header_found = false,
-        .buffer = {0}
+    .package_length = REMOTER_DATA_LENGTH,
+    .header = REMOTER_HEADER,
+    .header_length = REMOTER_HEADER_LENGTH,
+    .tail_flag = 1,
+    .tail = REMOTER_TAIL,
+    .tail_length = REMOTER_TAIL_LENGTH,
+    .callback = Remoter_Receive,
+    
+    .buffer_index = 0,
+    .header_found = false,
+    .buffer = {0}
 };
+
+/* Private type --------------------------------------------------------------*/
+/* Private function declarations ---------------------------------------------*/
+/* function prototypes -------------------------------------------------------*/
 
 void Remoter_Receive(uint8_t* data) {
     if (data == NULL) {
@@ -46,3 +53,5 @@ void Remoter_Receive(uint8_t* data) {
 }
 
 #endif
+
+/************************ COPYRIGHT(C) Pangolin Robot Lab **************************/

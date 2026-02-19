@@ -5,6 +5,7 @@
 #ifndef DEVICE_VISUAL_H
 #define DEVICE_VISUAL_H
 
+#include <stdint.h>
 #include <string.h>
 
 #define VISUAL_HEADER1        0xAA
@@ -29,3 +30,5 @@ extern Visual_t visualData;
 void Visual_Receive(uint8_t *data);
 
 #endif //DEVICE_VISUAL_H
+
+/************************ COPYRIGHT(C) Pangolin Robot Lab **************************/

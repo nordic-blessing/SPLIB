@@ -1,6 +1,3 @@
-//
-// Created by Icol_Lee on 2025/11/7.
-//
 #ifndef DEVICE_UNITREE_A1_PROTOCOL_H
 #define DEVICE_UNITREE_A1_PROTOCOL_H
 

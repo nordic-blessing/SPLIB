@@ -51,4 +51,6 @@ void m3508_init(DJI_t *ptr, uint8_t id, FDCAN_HandleTypeDef *hfdcan);
 void m3508_receive(DJI_t *ptr, const uint8_t rx[8]);
 void m3508_send(DJI_t *ptr, int16_t iq);
 
-#endif //M3508_M3508_H
+#endif //DEVICE_M3508_H
+
+/************************ COPYRIGHT(C) Pangolin Robot Lab **************************/

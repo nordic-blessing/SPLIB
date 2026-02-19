@@ -6,19 +6,26 @@
 
 #if USE_SPLIB_WIT_JY_ME01
 
+/* Includes ------------------------------------------------------------------*/
 #include "JY-ME01.h"
 
+/* Private define ------------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
 float IMU_Yaw;
 ProtocolHandler Wit_JY_ME01= {
-        .package_length = WIT_ME01_DATA_LENGTH,
-        .header = WIT_CMD_R << 8 | Tripod_ID,
-        .header_length = WIT_ME01_HEADER_LENGTH,
-        .tail_flag = 0,
-        .callback = Tripod_Receive,
-
-        .buffer_index = 0,
-        .header_found = 0
+    .package_length = WIT_ME01_DATA_LENGTH,
+    .header = WIT_CMD_R << 8 | Tripod_ID,
+    .header_length = WIT_ME01_HEADER_LENGTH,
+    .tail_flag = 0,
+    .callback = Tripod_Receive,
+    
+    .buffer_index = 0,
+    .header_found = 0
 };
+
+/* Private type --------------------------------------------------------------*/
+/* Private function declarations ---------------------------------------------*/
+/* function prototypes -------------------------------------------------------*/
 
 void Tripod_Receive(uint8_t* data) {
     uint32_t temp;
@@ -28,3 +35,5 @@ void Tripod_Receive(uint8_t* data) {
 }
 
 #endif
+
+/************************ COPYRIGHT(C) Pangolin Robot Lab **************************/

@@ -6,22 +6,29 @@
 
 #if USE_SPLIB_VISUAL_UART
 
+/* Includes ------------------------------------------------------------------*/
 #include "visual_uart.h"
 
+/* Private define ------------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
 Visual_t visualData;
 ProtocolHandler visual_uart={
-        .package_length =VISUAL_DATA_LENGTH,
-        .header = VISUAL_HEADER1,
-        .header_length = VISUAL_HEADER_LENGTH,
-        .tail_flag = 1,
-        .tail = VISUAL_TAIL2,
-        .tail_length = VISUAL_TAIL_LENGTH,
-        .callback = Visual_Receive,
-
-        .buffer_index = 0,
-        .header_found = false,
-        .buffer = {0}
+    .package_length =VISUAL_DATA_LENGTH,
+    .header = VISUAL_HEADER1,
+    .header_length = VISUAL_HEADER_LENGTH,
+    .tail_flag = 1,
+    .tail = VISUAL_TAIL2,
+    .tail_length = VISUAL_TAIL_LENGTH,
+    .callback = Visual_Receive,
+    
+    .buffer_index = 0,
+    .header_found = false,
+    .buffer = {0}
 };
+
+/* Private type --------------------------------------------------------------*/
+/* Private function declarations ---------------------------------------------*/
+/* function prototypes -------------------------------------------------------*/
 
 void Visual_Receive(uint8_t *data) {
     uint32_t temp;
@@ -50,3 +57,5 @@ void Visual_Receive(uint8_t *data) {
 }
 
 #endif
+
+/************************ COPYRIGHT(C) Pangolin Robot Lab **************************/

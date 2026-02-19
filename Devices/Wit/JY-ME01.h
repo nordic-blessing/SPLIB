@@ -23,3 +23,5 @@ extern float IMU_Yaw;
 void Tripod_Receive(uint8_t* data);
 
 #endif //DEVICE_WIT_JY_ME01_H
+
+/************************ COPYRIGHT(C) Pangolin Robot Lab **************************/

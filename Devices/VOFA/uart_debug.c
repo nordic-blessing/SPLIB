@@ -6,8 +6,11 @@
 
 #if USE_SPLIB_VOFA_DEBUG
 
+/* Includes ------------------------------------------------------------------*/
 #include "uart_debug.h"
 
+/* Private define ------------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
 Debug_t debugData;
 ProtocolHandler vofa_debug={
         .package_length = DEBUG_DATA_LENGTH,
@@ -22,6 +25,10 @@ ProtocolHandler vofa_debug={
         .header_found = false,
         .buffer = {0}
 };
+
+/* Private type --------------------------------------------------------------*/
+/* Private function declarations ---------------------------------------------*/
+/* function prototypes -------------------------------------------------------*/
 
 void Debug_Receive(uint8_t* data) {
     uint32_t temp;
@@ -59,3 +66,5 @@ void Debug_Receive(uint8_t* data) {
 }
 
 #endif
+
+/************************ COPYRIGHT(C) Pangolin Robot Lab **************************/

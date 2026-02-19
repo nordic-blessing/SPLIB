@@ -1,7 +1,3 @@
-//
-// Created by Icol_Lee on 2025/9/20.
-//
-
 #pragma once
 
 #include "splib_config.h"
@@ -17,3 +13,5 @@
     #define MALLOC(size)    malloc(size)
     #define FREE(ptr)       free(ptr)
 #endif
+
+/************************ COPYRIGHT(C) Pangolin Robot Lab **************************/

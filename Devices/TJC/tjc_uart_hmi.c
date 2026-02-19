@@ -6,11 +6,18 @@
 
 #if USE_SPLIB_TJC_UART
 
+/* Includes ------------------------------------------------------------------*/
 #include "tjc_uart_hmi.h"
 
+/* Private define ------------------------------------------------------------*/
 #define TJC_TX_BUF_SIZE 125
 
+/* Private variables ---------------------------------------------------------*/
 uint8_t tjc_send_buf[TJC_TX_BUF_SIZE];
+
+/* Private type --------------------------------------------------------------*/
+/* Private function declarations ---------------------------------------------*/
+/* function prototypes -------------------------------------------------------*/
 
 /**
  * 用于陶晶驰串口屏的指令发送
@@ -116,3 +123,5 @@ void Linkage_hmi(float X, float Y) {
 }
 
 #endif
+
+/************************ COPYRIGHT(C) Pangolin Robot Lab **************************/

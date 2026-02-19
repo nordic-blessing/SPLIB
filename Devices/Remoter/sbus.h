@@ -30,3 +30,5 @@ extern Remoter_sbus RemoterData;
 void Remoter_Receive(uint8_t* data);
 
 #endif //DEVICE_TEST_SBUS_H
+
+/************************ COPYRIGHT(C) Pangolin Robot Lab **************************/

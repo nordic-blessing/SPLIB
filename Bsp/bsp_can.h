@@ -1,6 +1,21 @@
-//
-// Created by Icol_Lee on 2025/9/27.
-//
+/**
+  ******************************************************************************
+  @file     bsp_can.h
+  @brief    STM32(HAL) CAN/FDCAN驱动： 
+                - 滤波器掩码配置
+                - 中断回调注册
+                - 标准/扩展帧发送
+  @author   Icol Boom <icolboom4@gmail.com>
+  @date     2025-09-27 (Created) | 2026-02-19 (Last modified)
+  @version  v1.0
+  ------------------------------------------------------------------------------
+  CHANGE LOG :
+    - 2026-02-19 [v1.0] Icol Boom: 创建初始版本，完成初步测试
+  ******************************************************************************
+  Copyright (c) 2026 ~ -, Sichuan University Pangolin Robot Lab.
+  All rights reserved.
+  ******************************************************************************
+*/
 
 #ifndef BSP_CAN_H
 #define BSP_CAN_H
@@ -75,3 +90,5 @@ void CAN_SendStdData(CAN_HandleTypeDef* hcan, uint16_t StdId, uint8_t* pData, ui
 void CAN_SendExtData(CAN_HandleTypeDef* hcan, uint16_t ExtId, uint8_t* pData, uint8_t Len);
 
 #endif //BSP_CAN_H
+
+/************************ COPYRIGHT(C) Pangolin Robot Lab **************************/

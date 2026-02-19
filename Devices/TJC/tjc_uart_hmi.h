@@ -30,3 +30,5 @@ void tjc_cirs(int posX, int posY, int r, int color);
 void Linkage_hmi(float X, float Y);
 
 #endif //DEVICE_TJC_UART_HMI_H
+
+/************************ COPYRIGHT(C) Pangolin Robot Lab **************************/

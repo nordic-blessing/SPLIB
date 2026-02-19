@@ -14,3 +14,5 @@
 void uart_printf(const char *format, ...);
 
 #endif //USER_USART_PRINTF_H
+
+/************************ COPYRIGHT(C) Pangolin Robot Lab **************************/
