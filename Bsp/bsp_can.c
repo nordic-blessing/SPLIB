@@ -7,24 +7,37 @@
 
 #include "bsp_can.h"
 
-static void (*pCAN1_RxCpltCallback)(CAN_RxBuffer *);
-static void (*pCAN2_RxCpltCallback)(CAN_RxBuffer *);
-static void (*pCAN3_RxCpltCallback)(CAN_RxBuffer *);
+static void (*pCAN1_FIFO0RxCpltCallback)(CAN_RxBuffer *);
+static void (*pCAN2_FIFO0RxCpltCallback)(CAN_RxBuffer *);
+static void (*pCAN3_FIFO0RxCpltCallback)(CAN_RxBuffer *);
+static void (*pCAN1_FIFO1RxCpltCallback)(CAN_RxBuffer *);
+static void (*pCAN2_FIFO1RxCpltCallback)(CAN_RxBuffer *);
+static void (*pCAN3_FIFO1RxCpltCallback)(CAN_RxBuffer *);
 
 /**
  * 开启CAN中断，设置回调函数
  * @param hcan  can句柄
  * @param pFunc 回调函数
  */
-void CAN_Start_IT(CAN_HandleTypeDef* hcan, void (*pFunc)(CAN_RxBuffer*)) {
+void CAN_Start_IT(CAN_HandleTypeDef* hcan, uint8_t FIFOx, void (*pFunc)(CAN_RxBuffer*)) {
 #if USE_SPLIB_FDCAN
     /* 配置回调函数 */
-    if (hcan->Instance == FDCAN1) {
-        pCAN1_RxCpltCallback = pFunc;
-    } else if (hcan->Instance == FDCAN2) {
-        pCAN2_RxCpltCallback = pFunc;
-    } else if (hcan->Instance == FDCAN3) {
-        pCAN3_RxCpltCallback = pFunc;
+    if(FIFOx == CanFifo_0) {
+        if (hcan->Instance == FDCAN1) {
+            pCAN1_FIFO0RxCpltCallback = pFunc;
+        } else if (hcan->Instance == FDCAN2) {
+            pCAN2_FIFO0RxCpltCallback = pFunc;
+        } else if (hcan->Instance == FDCAN3) {
+            pCAN3_FIFO0RxCpltCallback = pFunc;
+        }
+    }else if(FIFOx == CanFifo_1){
+        if (hcan->Instance == FDCAN1) {
+            pCAN1_FIFO1RxCpltCallback = pFunc;
+        } else if (hcan->Instance == FDCAN2) {
+            pCAN2_FIFO1RxCpltCallback = pFunc;
+        } else if (hcan->Instance == FDCAN3) {
+            pCAN3_FIFO1RxCpltCallback = pFunc;
+        }
     }
 
     /* 开启FDCAN外设 */
@@ -37,10 +50,22 @@ void CAN_Start_IT(CAN_HandleTypeDef* hcan, void (*pFunc)(CAN_RxBuffer*)) {
 
 #if USE_SPLIB_CAN
     /* 配置回调函数 */
-    if (hcan->Instance == CAN1) {
-        pCAN1_RxCpltCallback = pFunc;
-    } else if (hcan->Instance == CAN2) {
-        pCAN2_RxCpltCallback = pFunc;
+    if(FIFOx == CanFifo_0) {
+        if (hcan->Instance == CAN1) {
+            pCAN1_FIFO0RxCpltCallback = pFunc;
+        } else if (hcan->Instance == CAN2) {
+            pCAN2_FIFO0RxCpltCallback = pFunc;
+        } else if (hcan->Instance == CAN3) {
+            pCAN3_FIFO0RxCpltCallback = pFunc;
+        }
+    }else if(FIFOx == CanFifo_1){
+        if (hcan->Instance == CAN1) {
+            pCAN1_FIFO1RxCpltCallback = pFunc;
+        } else if (hcan->Instance == CAN2) {
+            pCAN2_FIFO1RxCpltCallback = pFunc;
+        } else if (hcan->Instance == CAN3) {
+            pCAN3_FIFO1RxCpltCallback = pFunc;
+        }
     }
 
     /* 开启CAN外设 */
@@ -199,8 +224,8 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
             CAN_RxBuffer CAN1_RxBuffer;
 
             if (HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &CAN1_RxBuffer.header, CAN1_RxBuffer.data) == HAL_OK) {
-                if (pCAN1_RxCpltCallback != NULL) {
-                    pCAN1_RxCpltCallback(&CAN1_RxBuffer);
+                if (pCAN1_FIFO0RxCpltCallback != NULL) {
+                    pCAN1_FIFO0RxCpltCallback(&CAN1_RxBuffer);
                 }
             } else {}
         } else if (hfdcan->Instance == FDCAN2) {
@@ -208,8 +233,8 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
             CAN_RxBuffer CAN2_RxBuffer;
 
             if (HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &CAN2_RxBuffer.header, CAN2_RxBuffer.data) == HAL_OK) {
-                if (pCAN2_RxCpltCallback != NULL) {
-                    pCAN2_RxCpltCallback(&CAN2_RxBuffer);
+                if (pCAN2_FIFO0RxCpltCallback != NULL) {
+                    pCAN2_FIFO0RxCpltCallback(&CAN2_RxBuffer);
                 }
             } else {}
         } else if (hfdcan->Instance == FDCAN3) {
@@ -217,8 +242,8 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
             CAN_RxBuffer CAN3_RxBuffer;
 
             if (HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &CAN3_RxBuffer.header, CAN3_RxBuffer.data) == HAL_OK) {
-                if (pCAN3_RxCpltCallback != NULL) {
-                    pCAN3_RxCpltCallback(&CAN3_RxBuffer);
+                if (pCAN3_FIFO0RxCpltCallback != NULL) {
+                    pCAN3_FIFO0RxCpltCallback(&CAN3_RxBuffer);
                 }
             } else {}
         }
@@ -233,14 +258,18 @@ void HAL_CAN_RxFifo0FullCallback(CAN_HandleTypeDef *hcan) {
         CAN_RxBuffer CAN1_RxBuffer;
 
         if (HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &CAN1_RxBuffer.header, CAN1_RxBuffer.data) == HAL_OK) {
-            pCAN1_RxCpltCallback(&CAN1_RxBuffer);
+            if(pCAN1_FIFO0RxCpltCallback != NULL) {
+                pCAN1_FIFO0RxCpltCallback(&CAN1_RxBuffer);
+            }
         } else {}
     } else if (hcan->Instance == CAN2) {
         /*!< CAN receive buffer */
         CAN_RxBuffer CAN2_RxBuffer;
 
         if (HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &CAN2_RxBuffer.header, CAN2_RxBuffer.data) == HAL_OK) {
-            pCAN2_RxCpltCallback(&CAN2_RxBuffer);
+            if(pCAN2_FIFO0RxCpltCallback != NULL) {
+                pCAN2_FIFO0RxCpltCallback(&CAN2_RxBuffer);
+            }
         } else {}
     }
 }
@@ -258,21 +287,27 @@ void HAL_FDCAN_RxFifo1Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo1ITs)
             CAN_RxBuffer CAN1_RxBuffer;
 
             if (HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO1, &CAN1_RxBuffer.header, CAN1_RxBuffer.data) == HAL_OK) {
-                pCAN1_RxCpltCallback(&CAN1_RxBuffer);
+                if(pCAN1_FIFO1RxCpltCallback != NULL) {
+                    pCAN1_FIFO1RxCpltCallback(&CAN1_RxBuffer);
+                }
             } else {}
         } else if (hfdcan->Instance == FDCAN2) {
             /*!< CAN receive buffer */
             CAN_RxBuffer CAN2_RxBuffer;
 
             if (HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO1, &CAN2_RxBuffer.header, CAN2_RxBuffer.data) == HAL_OK) {
-                pCAN2_RxCpltCallback(&CAN2_RxBuffer);
+                if(pCAN2_FIFO1RxCpltCallback != NULL) {
+                    pCAN2_FIFO1RxCpltCallback(&CAN2_RxBuffer);
+                }
             } else {}
         } else if (hfdcan->Instance == FDCAN3) {
             /*!< CAN receive buffer */
             CAN_RxBuffer CAN3_RxBuffer;
 
             if (HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO1, &CAN3_RxBuffer.header, CAN3_RxBuffer.data) == HAL_OK) {
-                pCAN3_RxCpltCallback(&CAN3_RxBuffer);
+                if(pCAN3_FIFO1RxCpltCallback != NULL) {
+                    pCAN3_FIFO1RxCpltCallback(&CAN3_RxBuffer);
+                }
             } else {}
         }
     }
@@ -286,14 +321,18 @@ void HAL_CAN_RxFifo1FullCallback(CAN_HandleTypeDef *hcan) {
         CAN_RxBuffer CAN1_RxBuffer;
 
         if (HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO1, &CAN1_RxBuffer.header, CAN1_RxBuffer.data) == HAL_OK) {
-            pCAN1_RxCpltCallback(&CAN1_RxBuffer);
+            if(pCAN1_FIFO1RxCpltCallback != NULL) {
+                pCAN1_FIFO1RxCpltCallback(&CAN1_RxBuffer);
+            }
         } else {}
     } else if (hcan->Instance == CAN2) {
         /*!< CAN receive buffer */
         CAN_RxBuffer CAN2_RxBuffer;
 
         if (HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO1, &CAN2_RxBuffer.header, CAN2_RxBuffer.data) == HAL_OK) {
-            pCAN2_RxCpltCallback(&CAN2_RxBuffer);
+            if(pCAN2_FIFO1RxCpltCallback != NULL) {
+                pCAN2_FIFO1RxCpltCallback(&CAN2_RxBuffer);
+            }
         } else {}
     }
 }

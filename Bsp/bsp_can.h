@@ -7,12 +7,14 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include <stdint.h>
+
 #if USE_SPLIB_FDCAN
 #include "fdcan.h"
 #endif
 #if USE_SPLIB_CAN
 #include "can.h"
 #endif
+
 /* Private macros ------------------------------------------------------------*/
 #define CanFilter_0     (0  << 3)
 #define CanFilter_1     (1  << 3)
@@ -51,6 +53,7 @@
 
 #define Can_DataType    (0 << 0)
 #define Can_RemoteType  (1 << 0)
+
 #if USE_SPLIB_FDCAN
 #define CAN_HandleTypeDef   FDCAN_HandleTypeDef
 #define CAN_RxHeaderTypeDef FDCAN_RxHeaderTypeDef
@@ -66,7 +69,7 @@ typedef struct {
 
 /* Exported variables ---------------------------------------------------------*/
 /* Exported function declarations ---------------------------------------------*/
-void CAN_Start_IT(CAN_HandleTypeDef* hcan, void (*pFunc)(CAN_RxBuffer*));
+void CAN_Start_IT(CAN_HandleTypeDef* hcan, uint8_t FIFOx, void (*pFunc)(CAN_RxBuffer*));
 void CAN_Filter_Mask_Config(CAN_HandleTypeDef* hcan, uint8_t para, uint32_t Id, uint32_t Mask);
 void CAN_SendStdData(CAN_HandleTypeDef* hcan, uint16_t StdId, uint8_t* pData, uint8_t Len);
 void CAN_SendExtData(CAN_HandleTypeDef* hcan, uint16_t ExtId, uint8_t* pData, uint8_t Len);

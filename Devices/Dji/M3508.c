@@ -44,7 +44,7 @@ void m3508_init(DJI_t *ptr, uint8_t id, FDCAN_HandleTypeDef *hfdcan) {
  * @param ptr
  * @param rx    从中断中接受到的数据
  */
-void m3508_receive(DJI_t *ptr, uint8_t rx[]) {
+void m3508_receive(DJI_t *ptr, const uint8_t rx[]) {
     ptr->last_pos = ptr->pos;
     ptr->pos = (uint16_t) (rx[0] << 8 | rx[1]);
     ptr->speed_rpm = (int16_t) (rx[2] << 8 | rx[3]) / 19;
