@@ -61,17 +61,20 @@ void uart_IT_protocol_init() {
  */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 /*
+#if USE_SPLIB_ATOMROBOTICS
+    uart_RX_decode(huart, &saber_uart);
+#endif
 #if USE_SPLIB_LASER_L1S
-    uart_RX_decode(huart, Laser_L1s);
+    uart_RX_decode(huart, &Laser_L1s);
 #endif
 #if USE_SPLIB_REMOTER_SBUS
-    uart_RX_decode(huart, remote_sbus);
+    uart_RX_decode(huart, &remote_sbus);
 #endif
 #if USE_SPLIB_VOFA_DEBUG
-    uart_RX_decode(huart, vofa_debug);
+    uart_RX_decode(huart, &vofa_debug);
 #endif
 #if USE_SPLIB_VISUAL_UART
-    uart_RX_decode(huart, visual_uart);
+    uart_RX_decode(huart, &visual_uart);
 #endif
 #if USE_SPLIB_WIT_JY_ME01
     uart_RX_decode(huart, &Wit_JY_ME01);

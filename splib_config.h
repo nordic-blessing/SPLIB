@@ -12,6 +12,7 @@
 #define USE_SPLIB_UART              0
 
 /* Devices  -----------------------------------------------*/
+#define USE_SPLIB_ATOMROBOTICS      0
 #define USE_SPLIB_CONMMAND          0
 #define USE_SPLIB_DJI               0
 #define USE_SPLIB_DREMPOWER         0
@@ -48,6 +49,9 @@
 /* Bsp header end */
 
 /* Devices header begin */
+#if USE_SPLIB_ATOMROBOTICS
+    #include "Devices/AtomRobotics/Saber_uart.h"
+#endif
 #if USE_SPLIB_CONMMAND
     #include "Devices/Commander/command_can.h"
 #endif

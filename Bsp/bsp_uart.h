@@ -45,6 +45,9 @@ typedef struct {
 } ProtocolHandler;
 
 /* Exported variables ---------------------------------------------------------*/
+#if USE_SPLIB_ATOMROBOTICS
+    extern ProtocolHandler saber_uart;
+#endif
 #if USE_SPLIB_LASER_L1S
     extern ProtocolHandler Laser_L1s;
 #endif
