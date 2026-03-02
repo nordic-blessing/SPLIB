@@ -58,7 +58,7 @@ static void (*pCAN3_FIFO1RxCpltCallback)(CAN_RxBuffer *);
  * @param hcan  can句柄
  * @param pFunc 回调函数
  */
-void    CAN_Start_IT(CAN_HandleTypeDef* hcan, uint8_t FIFOx, void (*pFunc)(CAN_RxBuffer*)) {
+void CAN_Start_IT(CAN_HandleTypeDef* hcan, uint8_t FIFOx, void (*pFunc)(CAN_RxBuffer*)) {
 #if USE_SPLIB_FDCAN
     /* 配置回调函数 */
     if(FIFOx == CanFifo_0) {
@@ -118,8 +118,7 @@ void    CAN_Start_IT(CAN_HandleTypeDef* hcan, uint8_t FIFOx, void (*pFunc)(CAN_R
  * @param para  [|Filter编号|FIFOx(1bit)|ID类型(1bit)|帧类型(1bit)|]
  * @param Id    [ID]
  * @param Mask  [掩码(0x3ff,0x1FFFFFFF)]
- * @brief   CAN模式下需要配置过滤器过滤帧的帧类型
- *          FDCAN模式下无需关注帧类型，只过滤ID
+ * @brief       FDCAN模式下无法将数据帧从遥控帧中滤除，但是可以实现拒接遥控帧
  */
 void CAN_Filter_Mask_Config(CAN_HandleTypeDef* hcan, uint8_t para, uint32_t Id, uint32_t Mask) {
 #if USE_SPLIB_FDCAN
@@ -128,12 +127,19 @@ void CAN_Filter_Mask_Config(CAN_HandleTypeDef* hcan, uint8_t para, uint32_t Id, 
     canFliter.IdType = ((para >> 1) & 0x01) ? FDCAN_EXTENDED_ID : FDCAN_STANDARD_ID;    // ID类型
     canFliter.FilterIndex = para >> 3;                                                  // 过滤器索引
     canFliter.FilterType = FDCAN_FILTER_MASK;                                           // 过滤器类型
-    canFliter.FilterConfig = (para >> 2) & 0x01;                                        // 过滤器关联FIFO
+    canFliter.FilterConfig = ((para >> 2) & 0x01) ? FDCAN_FILTER_TO_RXFIFO1
+                                                  : FDCAN_FILTER_TO_RXFIFO0;            // 过滤器关联FIFO
     canFliter.FilterID1 = Id;
     canFliter.FilterID2 = Mask;                                                         // FDCAN模式下直接填入ID掩码即可
 
     /*FDCAN初始化*/
     HAL_FDCAN_ConfigFilter(hcan, &canFliter);
+
+    uint8_t Std_Remote_Flag = (para & 0x01) ? (((para >> 1) & 0x01) ? FDCAN_REJECT_REMOTE : FDCAN_FILTER_REMOTE)
+                                            : FDCAN_REJECT_REMOTE;
+    uint8_t Ext_Remote_Flag = (para & 0x01) ? (((para >> 1) & 0x01) ? FDCAN_FILTER_REMOTE : FDCAN_REJECT_REMOTE)
+                                            : FDCAN_REJECT_REMOTE;
+    HAL_FDCAN_ConfigGlobalFilter(hcan, FDCAN_REJECT, FDCAN_REJECT, Std_Remote_Flag, Ext_Remote_Flag);
 #endif
 
 #if USE_SPLIB_CAN
