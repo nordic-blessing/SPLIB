@@ -83,7 +83,6 @@ typedef struct {
 } RobStride_data_read_write;
 
 /* Exported macros -----------------------------------------------------------*/
-extern RobStride_Motor EL05;
 
 /* Exported types ------------------------------------------------------------*/
 // 电机位置信息结构体
@@ -124,6 +123,7 @@ typedef struct {
 } RobStride_Motor;
 
 /* Exported variables --------------------------------------------------------*/
+extern RobStride_Motor EL05;
 
 /* Exported function declarations --------------------------------------------*/
 void RobStride_Motor_Init(RobStride_Motor *motor, uint8_t CAN_Id);
