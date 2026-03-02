@@ -1,6 +1,44 @@
-//
-// Created by Icol_Lee on 2026/2/17.
-//
+/**
+  ******************************************************************************
+  @file     DrEmpower_can.h
+  @brief    大然一体化关节电机 CAN 驱动：
+                - 位置模式
+                - 速度模式
+                - 力矩模式
+                - 获取电机参数
+            功能与官方驱动基本一致，根据队内使用情况对官方库做了简化，去除了较少使用的API
+            以及部分空循环
+  @author   Icol Boom <icolboom4@gmail.com>
+  @date     2025-03-15 (Created) | 2026-3-2 (Last modified)
+  @version  v1.0
+  ------------------------------------------------------------------------------
+  CHANGE LOG :
+    - 2026-03-2 [v1.0] Icol Boom: 创建初始版本，完成初步测试
+  ------------------------------------------------------------------------------
+  @example
+    具体使用与大然官方驱动一致
+    - 回调函数参考
+    void func_fdcan1_DrEmpower(CAN_RxBuffer* rxBuffer) {
+        uint8_t CMD = rxBuffer->header.Identifier & 0x1F;
+        if (CMD == 0x1E) {
+            DrEmpower_Receive(rxBuffer->data);
+        }
+    }
+    - 配置并启动CAN（详情参考bsp_can的使用说明）
+    CAN_Filter_Mask_Config(&hfdcan1, CanFilter_0|CanFifo_0|Can_StdId|Can_DataType, 0x1E, 0x01F);
+    CAN_Start_IT(&hfdcan1, CanFifo_0, func_fdcan1_DrEmpower);
+  ------------------------------------------------------------------------------
+  @attention
+    - 使用前请在`splib_config.h`中使能`USE_SPLIB_CAN`或`USE_SPLIB_FDCAN`
+    - 回调函数运行在中断上下文，禁止使用延时、打印、大量运算等阻塞性操作
+    - 修改代码后需同步更新版本号、最后修改日期及CHANGE LOG，请务必保证注释清晰明确地
+    让后人知晓如何使用该驱动
+    - 本驱动仅测试了STM32G4系列的部分型号，依赖STM32 HAL库底层初始化
+  ******************************************************************************
+  Copyright (c) 2026 ~ -, Sichuan University Pangolin Robot Lab.
+  All rights reserved.
+  ******************************************************************************
+*/
 #include "splib.h"
 
 #if USE_SPLIB_DREMPOWER
