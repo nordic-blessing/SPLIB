@@ -92,15 +92,15 @@ void initPID(PID_t* pid, float MAX_OUTPUT, float MAX_E_I, float deadZone) {
 
 /**
  * 设置pid参数
- * @param pid
+ * @param ptr
  * @param kp
  * @param ki
  * @param kd
  */
-void setPIDParam(PID_t* pid, float kp, float ki, float kd) {
-    pid->kp = kp;
-    pid->ki = ki;
-    pid->kd = kd;
+void setPIDParam(PID_t* ptr, float kp, float ki, float kd) {
+    ptr->kp = kp;
+    ptr->ki = ki;
+    ptr->kd = kd;
 }
 
 /**
@@ -114,51 +114,52 @@ void setPIDTarget(PID_t* pid, float target){
 
 /**
  * 增量式pid
- * @param pid
+ * @param ptr
  * @param input
  */
-void updatePID_Incremental(PID_t* pid, float input){
-    pid->input = input;
-    pid->error.now = pid->target - pid->input;
+void updatePID_Incremental(PID_t* ptr, float input){
+    ptr->input = input;
+    ptr->error.now = ptr->target - ptr->input;
 
-    if (fabsf(pid->error.now) < pid->deadZone) {
-        pid->error.now = 0;
+    if (fabsf(ptr->error.now) < ptr->deadZone) {
+        ptr->error.now = 0;
     }
 
-    pid->output = pid->output_last
-                  + pid->kp * (pid->error.now - pid->error.last)
-                  + pid->ki * pid->error.now
-                  + pid->kd * (pid->error.now - 2 * pid->error.last + pid->error.pre);
-    pid->output = limitOutput(pid->output,pid->MAX_OUTPUT);
+    ptr->output = ptr->output_last
+                  + ptr->kp * (ptr->error.now - ptr->error.last)
+                  + ptr->ki * ptr->error.now
+                  + ptr->kd * (ptr->error.now - 2 * ptr->error.last + ptr->error.pre);
+    ptr->output = limitOutput(ptr->output, ptr->MAX_OUTPUT);
 
-    pid->error.pre = pid->error.last;
-    pid->error.last = pid->error.now;
-    pid->output_last = pid->output;
+    ptr->error.pre = ptr->error.last;
+    ptr->error.last = ptr->error.now;
+    ptr->output_last = ptr->output;
 }
 
 /**
  * 位置式pid
- * @param pid
+ * @param ptr
  * @param input
  */
-void updatePID_Position(PID_t* pid, float input) {
-    pid->input = input;
-    pid->error.now = pid->target - pid->input;
+void updatePID_Position(PID_t* ptr, float input) {
+    ptr->input = input;
+    ptr->error.now = ptr->target - ptr->input;
 
-    if (fabsf(pid->error.now) < pid->deadZone) {
-        pid->error.now = 0;
+    if (fabsf(ptr->error.now) < ptr->deadZone) {
+        ptr->error.now = 0;
     }
 
-    pid->error.integral += pid->error.now;
-    pid->error.integral = limitOutput(pid->error.integral, pid->MAX_ERROR_INTEGRAL);
+    ptr->error.integral += ptr->error.now;
+    ptr->error.integral = limitOutput(ptr->error.integral, ptr->MAX_ERROR_INTEGRAL);
 
-    pid->output = pid->kp * pid->error.now
-                  + pid->ki * pid->error.integral
-                  + pid->kd * (pid->error.now - pid->error.last);
-    pid->output = limitOutput(pid->output, pid->MAX_OUTPUT);
+    ptr->output = ptr->kp * ptr->error.now
+                  + ptr->ki * ptr->error.integral
+                  + ptr->kd * (ptr->error.now - ptr->error.last);
+    ptr->output = limitOutput(ptr->output, ptr->MAX_OUTPUT);
 
-    pid->error.last = pid->error.now;
+    ptr->error.last = ptr->error.now;
 }
+
 #endif
 
 /************************ COPYRIGHT(C) Pangolin Robot Lab **************************/

@@ -2,29 +2,29 @@
 #define SPLIB_CONFIG_H
 
 /* Algorithm ----------------------------------------------*/
-#define USE_SPLIB_PID               0
-#define USE_SPLIB_TRAJPLANNER       0
+#define USE_SPLIB_PID               1
+#define USE_SPLIB_TRAJPLANNER       1
 
 /* Bsp ----------------------------------------------------*/
 #define USE_SPLIB_CAN               0
-#define USE_SPLIB_FDCAN             0
-#define USE_SPLIB_LED               0
-#define USE_SPLIB_UART              0
+#define USE_SPLIB_FDCAN             1
+#define USE_SPLIB_LED               1
+#define USE_SPLIB_UART              1
 
 /* Devices  -----------------------------------------------*/
 #define USE_SPLIB_ATOMROBOTICS      0
 #define USE_SPLIB_CONMMAND          0
-#define USE_SPLIB_DJI               0
-#define USE_SPLIB_DREMPOWER         0
+#define USE_SPLIB_DJI               1
+#define USE_SPLIB_DREMPOWER         1
 #define USE_SPLIB_LASER_L1S         0
 #define USE_SPLIB_REMOTER_SBUS      0
-#define USE_SPLIB_ROBOSTRIDE        0
+#define USE_SPLIB_ROBOSTRIDE        1
 #define USE_SPLIB_TJC_UART          0
 #define USE_SPLIB_UNITREE           0
 #define USE_SPLIB_VESC              0
-#define USE_SPLIB_VISUAL_UART       0
-#define USE_SPLIB_VOFA_DEBUG        0
-#define USE_SPLIB_VOFA_PRINTF       0
+#define USE_SPLIB_VISUAL_UART       1
+#define USE_SPLIB_VOFA_DEBUG        1
+#define USE_SPLIB_VOFA_PRINTF       1
 #define USE_SPLIB_WIT_JY_ME01       0
 
 

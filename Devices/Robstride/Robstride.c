@@ -84,7 +84,7 @@ union float_to_hex{
     float floatValue;
     uint32_t hexValue;
 };
-union float_to_hex f_h;
+union float_to_hex Rob_f_h;
 
 // uint16_t型转float型浮点数
 float uint16_to_float(uint16_t x, float x_min, float x_max, int bits) {
@@ -109,7 +109,12 @@ float Byte_to_float(const uint8_t* byteData) {
     return *(float*)(&data);
 }
 
-// 接收处理函数
+/**
+ * 接收处理函数
+ * @param motor     电机实例
+ * @param DataFrame 数据
+ * @param ID_ExtId  数据ID
+ */
 void RobStride_Motor_Analysis(RobStride_Motor *motor, uint8_t *DataFrame, uint32_t ID_ExtId) {
     if ((uint8_t) ((ID_ExtId & 0xFF00) >> 8) == motor->CAN_ID) {
         if ((int) ((ID_ExtId & 0x1F000000) >> 24) == Communication_Type_MotorRequest) { // 通信类型2
@@ -316,11 +321,11 @@ void Set_RobStride_Motor_parameter(RobStride_Motor *motor, uint16_t Index, float
     if(Index == 0x7005){
         txData[4] = (uint8_t)Value;
     }else {
-        f_h.floatValue = Value;
-        txData[4] = f_h.hexValue;
-        txData[5] = f_h.hexValue >> 8;
-        txData[6] = f_h.hexValue >> 16;
-        txData[7] = f_h.hexValue >> 24;
+        Rob_f_h.floatValue = Value;
+        txData[4] = Rob_f_h.hexValue;
+        txData[5] = Rob_f_h.hexValue >> 8;
+        txData[6] = Rob_f_h.hexValue >> 16;
+        txData[7] = Rob_f_h.hexValue >> 24;
     }
 
     CAN_SendExtData(&Robostride_hcan, Id, txData, FDCAN_DLC_BYTES_8);

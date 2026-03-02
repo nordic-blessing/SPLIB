@@ -58,7 +58,7 @@ static void (*pCAN3_FIFO1RxCpltCallback)(CAN_RxBuffer *);
  * @param hcan  can句柄
  * @param pFunc 回调函数
  */
-void CAN_Start_IT(CAN_HandleTypeDef* hcan, uint8_t FIFOx, void (*pFunc)(CAN_RxBuffer*)) {
+void    CAN_Start_IT(CAN_HandleTypeDef* hcan, uint8_t FIFOx, void (*pFunc)(CAN_RxBuffer*)) {
 #if USE_SPLIB_FDCAN
     /* 配置回调函数 */
     if(FIFOx == CanFifo_0) {
