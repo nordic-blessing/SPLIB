@@ -12,6 +12,7 @@
 #define USE_SPLIB_UART              1
 
 /* Devices  -----------------------------------------------*/
+#define USE_SPLIB_ACQUISITION       1
 #define USE_SPLIB_ATOMROBOTICS      0
 #define USE_SPLIB_CONMMAND          0
 #define USE_SPLIB_DJI               1
@@ -35,6 +36,7 @@
 #if USE_SPLIB_TRAJPLANNER
     #include "Algorithm/TrajPlanner.h"
 #endif
+/* Algorithm header end */
 
 /* Bsp header begin */
 #if USE_SPLIB_FDCAN | USE_SPLIB_CAN
@@ -49,6 +51,9 @@
 /* Bsp header end */
 
 /* Devices header begin */
+#if USE_SPLIB_ACQUISITION
+    #include "Devices/Acquisition/mA_Acquisition.h"
+#endif
 #if USE_SPLIB_ATOMROBOTICS
     #include "Devices/AtomRobotics/Saber_uart.h"
 #endif

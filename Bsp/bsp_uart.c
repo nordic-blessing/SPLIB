@@ -47,11 +47,14 @@
  * 串口开始中断接收
  */
 void uart_IT_protocol_init() {
-#if USE_SPLIB_VOFA_DEBUG
-    HAL_UART_Receive_IT(&huart5, &vofa_debug.receive_byte, 1);
+#if USE_SPLIB_ACQUISITION
+    HAL_UART_Receive_IT(&huart2, &acquisition_uart_FM.receive_byte, 1);
 #endif
 #if USE_SPLIB_VISUAL_UART
     HAL_UART_Receive_IT(&huart4, &visual_uart.receive_byte, 1);
+#endif
+#if USE_SPLIB_VOFA_DEBUG
+    HAL_UART_Receive_IT(&huart5, &vofa_debug.receive_byte, 1);
 #endif
 }
 
@@ -80,7 +83,11 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     uart_RX_decode(huart, &Wit_JY_ME01);
 #endif
 */
-
+    if (huart->Instance == USART2) {
+#if USE_SPLIB_ACQUISITION
+        uart_RX_decode(huart, &acquisition_uart_FM);/* 电流采集 */
+#endif
+    }
     if (huart->Instance == UART4) {
 #if USE_SPLIB_VISUAL_UART
         uart_RX_decode(huart, &visual_uart);/* 串口设备接收 */

@@ -14,8 +14,8 @@
   ******************************************************************************
 */
 
-#ifndef DEVICE_SABER_UART_H
-#define DEVICE_SABER_UART_H
+#ifndef SPLIB_DEVICE_SABER_UART_H
+#define SPLIB_DEVICE_SABER_UART_H
 
 /* Includes ------------------------------------------------------------------*/
 #include <stdint.h>
@@ -157,6 +157,6 @@ extern Euler_t Euler; // 用于储存姿态角信息
 /* Exported function declarations ---------------------------------------------*/
 void Saber_GetMessage(uint8_t* data);
 
-#endif //DEVICE_SABER_UART_H
+#endif //SPLIB_DEVICE_SABER_UART_H
 
 /************************ COPYRIGHT(C) Pangolin Robot Lab **************************/

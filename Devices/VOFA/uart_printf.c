@@ -31,7 +31,7 @@ void uart_printf(const char *format, ...) {
     length = vsnprintf((char *) send_buf, TX_BUF_SIZE, (const char *) format, args);
     va_end(args);
 
-    HAL_UART_Transmit(&PRINTF_UART, (uint8_t *) send_buf, length, 50);
+    HAL_UART_Transmit(&PRINTF_UART, (uint8_t *) send_buf, length, 10);
 }
 
 #endif

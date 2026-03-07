@@ -6,7 +6,7 @@
                 - 中断回调注册
                 - 标准/扩展帧发送
   @author   Icol Boom <icolboom4@gmail.com>
-  @date     2025-09-27 (Created) | 2026-02-19 (Last modified)
+  @date     2025-09-27 (Created) | 2026-03-02 (Last modified)
   @version  v1.0
   ------------------------------------------------------------------------------
   CHANGE LOG :
