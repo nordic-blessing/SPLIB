@@ -15,12 +15,13 @@
 /* Private function declarations ---------------------------------------------*/
 /* function prototypes -------------------------------------------------------*/
 
-void command_transmit(uint8_t *pData) {
-    CAN_SendStdData(&COMMAND_CAN, 0x214 + COMMAND_ID, pData, FDCAN_DLC_BYTES_8);
+void command_transmit(uint8_t CMD_ID, uint8_t Data_type, uint8_t *pData) {
+    uint16_t std_id = DEVICE_ID | (CMD_ID << 4) | (Data_type << 2);
+    CAN_SendStdData(&COMMAND_CAN, std_id, pData, 8);
 }
 
 void command_receive(const uint8_t *pData) {
-
+    // 处理主控制器信息
 }
 
 #endif
