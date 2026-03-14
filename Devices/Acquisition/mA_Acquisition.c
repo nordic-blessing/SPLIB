@@ -3,11 +3,11 @@
   @file     mA_Acquisition.c
   @brief    4-20mA电流采集转RS485数字输出的Modbus协议驱动：
   @author   Icol Boom < icolboom4@gmail.com >
-  @date     2026-03-04 (Created) | 2026-03-07 (Last modified)
+  @date     2026-03-04 (Created) | 2026-03-04 (Last modified)
   @version  v1.0
   ------------------------------------------------------------------------------
   CHANGE LOG :
-    - 2026-03-07 [v1.0] Icol Boom: 创建初始版本，完成初步测试
+    - 2026-03-04 [v1.0] Icol Boom: 创建初始版本，完成初步测试
   ------------------------------------------------------------------------------
   @example
     - 使用示例
