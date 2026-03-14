@@ -2,9 +2,10 @@
 
 #include "splib_config.h"
 
-#define USE_FREERTOS    0
+#define USE_FREERTOS    1
 
 #if USE_FREERTOS
+    #include "cmsis_os.h"
     #define DELAY(x)        osDelay(x)
     #define MALLOC(size)    pvPortMalloc(size)
     #define FREE(ptr)       vPortFree(ptr)
