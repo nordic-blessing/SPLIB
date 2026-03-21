@@ -2,6 +2,7 @@
 #define SPLIB_CONFIG_H
 
 /* Algorithm ----------------------------------------------*/
+#define USE_SPLIB_FILTER            0
 #define USE_SPLIB_PID               0
 #define USE_SPLIB_TRAJPLANNER       0
 
@@ -32,6 +33,9 @@
 
 
 /* Algorithm header begin */
+#if USE_SPLIB_FILTER
+    #include "Algorithm/filter.h"
+#endif
 #if USE_SPLIB_PID
     #include "Algorithm/pid.h"
 #endif
