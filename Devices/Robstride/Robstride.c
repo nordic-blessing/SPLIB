@@ -245,6 +245,7 @@ void RobStride_Enable_Motor(RobStride_Motor *motor) {
     uint8_t txData[8] = {0};
 
     CAN_SendExtData(&Robostride_hcan, Id, txData, FDCAN_DLC_BYTES_8);
+    DELAY(1);
 }
 
 /**
@@ -304,6 +305,7 @@ void Get_RobStride_Motor_parameter(RobStride_Motor *motor, uint16_t Index) {
     txData[1] = Index >> 8;
 
     CAN_SendExtData(&Robostride_hcan, Id, txData, FDCAN_DLC_BYTES_8);
+    DELAY(1);
 }
 
 /**
@@ -329,6 +331,7 @@ void Set_RobStride_Motor_parameter(RobStride_Motor *motor, uint16_t Index, float
     }
 
     CAN_SendExtData(&Robostride_hcan, Id, txData, FDCAN_DLC_BYTES_8);
+    DELAY(1);
 }
 
 /**
@@ -451,6 +454,8 @@ void RobStride_Motor_CSP_control(RobStride_Motor *motor, float Angle, float limi
     if (motor->drw.run_mode.data != CSP_control_mode) {
         Set_RobStride_Motor_parameter(motor, 0X7005, CSP_control_mode);
         Get_RobStride_Motor_parameter(motor, 0x7005);
+        DELAY(1);
+        motor->Motor_Set_All.set_motor_mode = CSP_control_mode;
         RobStride_Enable_Motor(motor);
     }
 
@@ -459,8 +464,8 @@ void RobStride_Motor_CSP_control(RobStride_Motor *motor, float Angle, float limi
     }
 
     DELAY(1);
-
     Set_RobStride_Motor_parameter(motor, 0X7017, motor->Motor_Set_All.set_limit_speed);
+    DELAY(1);
     Set_RobStride_Motor_parameter(motor, 0X7016, motor->Motor_Set_All.set_angle);
 }
 

@@ -219,7 +219,7 @@ void CAN_SendStdData(CAN_HandleTypeDef* hcan, uint16_t StdId, uint8_t* pData, ui
  * @param pData
  * @param Len
  */
-void CAN_SendExtData(CAN_HandleTypeDef* hcan, uint16_t ExtId, uint8_t* pData, uint8_t Len) {
+void CAN_SendExtData(CAN_HandleTypeDef* hcan, uint32_t ExtId, uint8_t* pData, uint8_t Len) {
 #if USE_SPLIB_FDCAN
     FDCAN_TxHeaderTypeDef CAN_TxHeader = {0};
 

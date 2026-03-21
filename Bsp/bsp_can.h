@@ -87,7 +87,7 @@ typedef struct {
 void CAN_Start_IT(CAN_HandleTypeDef* hcan, uint8_t FIFOx, void (*pFunc)(CAN_RxBuffer*));
 void CAN_Filter_Mask_Config(CAN_HandleTypeDef* hcan, uint8_t para, uint32_t Id, uint32_t Mask);
 void CAN_SendStdData(CAN_HandleTypeDef* hcan, uint16_t StdId, uint8_t* pData, uint8_t Len);
-void CAN_SendExtData(CAN_HandleTypeDef* hcan, uint16_t ExtId, uint8_t* pData, uint8_t Len);
+void CAN_SendExtData(CAN_HandleTypeDef* hcan, uint32_t ExtId, uint8_t* pData, uint8_t Len);
 
 #endif //BSP_CAN_H
 

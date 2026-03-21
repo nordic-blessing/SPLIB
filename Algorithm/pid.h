@@ -55,8 +55,8 @@ extern PID_t posSwitch;
 void initPID(PID_t* pid, float MAX_OUTPUT, float MAX_E_I, float deadZone);
 void setPIDParam(PID_t* ptr, float kp, float ki, float kd);
 void setPIDTarget(PID_t* pid, float target);
+void updatePID_Incremental(PID_t* pid, float input);
 void updatePID_Position(PID_t* ptr, float input);
-void updatePID_Speed(PID_t* pid, float input);
 
 #endif //ALGORITHM_PID_H
 
