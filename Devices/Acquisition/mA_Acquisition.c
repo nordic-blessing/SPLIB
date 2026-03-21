@@ -27,7 +27,7 @@
         实际距离 = （反馈数字量 - 数字量下限） / 数字量幅度 * （最大测量距离 - 最小测量距离） + 最小测量距离
   ------------------------------------------------------------------------------
   @attention
-    - 使用前需要先声明 Acquisition_t 实例，并为其中 id 元素赋值
+    - 使用前需要先声明 Acquisition_t 实例，并为其中 id 元素赋值，同时在Acquisition_GetMessage配置解码
     - 模块极限反馈间隔为 6ms，请勿将数据的获取命令放于小于 6ms 的循环中！
     - 使用DT35时需要注意：当距离超过设置的上下限时，电流信号与距离不再成线性关系，本驱动仅负责数据的采集，如有需要可自行设置处理逻辑
     - 当前版本将Modbus协议规范当做特殊的私有协议进行处理，后续会补全Modbus的板级支持包
@@ -67,6 +67,20 @@ ProtocolHandler acquisition_uart_FM= {
 /* function prototypes -------------------------------------------------------*/
 
 /**
+ * 分配解码后的数据
+ * @param data
+ */
+void Acquisition_GetMessage(uint8_t* data) {
+    switch (data[0]) {
+        case 0x01:
+            DT35_T.value = Acquisition_Decode(data);
+            break;
+        default:
+            break;
+    }
+}
+
+/**
  * CRC校验
  * @param CRC_Ptr
  * @param LEN
@@ -104,21 +118,6 @@ void Acquisition_GetValue(Acquisition_t* pAcquisition) {
     data[7] = crc & 0xFF;
 
     HAL_UART_Transmit(&ACQUISITION_UART, data, sizeof(data) / sizeof(data[0]), 10);
-}
-
-
-/**
- * 分配解码后的数据
- * @param data
- */
-void Acquisition_GetMessage(uint8_t* data) {
-    switch (data[0]) {
-        case 0x01:
-            DT35_FM.value = Acquisition_Decode(data);
-            break;
-        default:
-            break;
-    }
 }
 
 /**

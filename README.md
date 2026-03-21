@@ -66,14 +66,13 @@
   - Algorithm
     - [x] PID 控制器
     - [x] 轨迹规划器（sigmod曲线）
-    - [ ] 滤波函数
+    - [x] 滤波函数
   - Bsp
     - [x] CAN/FDCAN 通信模块
     - [x] UART 串口模块
     - [x] LED 驱动模块
     - [ ] I2C 驱动模块
     - [ ] SPI 驱动模块
-    - [x] WDG 早唤醒中断回调
   - Devices
     - [x] Saber惯导模块
     - [ ] 板间 CAN 通讯
