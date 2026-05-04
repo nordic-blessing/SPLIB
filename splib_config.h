@@ -29,6 +29,7 @@
 #define USE_SPLIB_VOFA_DEBUG        0
 #define USE_SPLIB_VOFA_PRINTF       0
 #define USE_SPLIB_WIT_JY_ME01       0
+#define USE_SPLIB_WIT_HWT906        0
 #define USE_SPLIB_WS2812            0
 
 
@@ -104,6 +105,9 @@
 #endif
 #if USE_SPLIB_WIT_JY_ME01
     #include "Devices/Wit/JY-ME01.h"
+#endif
+#if USE_SPLIB_WIT_HWT906
+    #include "Devices/Wit/HWT906.h"
 #endif
 #if USE_SPLIB_WS2812
     #include "Devices/WS2812/WS2812B.h"
