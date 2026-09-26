@@ -9,8 +9,6 @@
 #include <stdarg.h>
 #include "usart.h"
 
-#define PRINTF_UART     huart5
-
 void uart_printf(const char *format, ...);
 
 #endif //USER_USART_PRINTF_H

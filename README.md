@@ -38,10 +38,12 @@
 
 - __添加SPLIB到新建项目中__
   - 拷贝 `SPLIB` 项目文件夹
+- __创建应用层文件夹`Application`__
 - __修改CMakeLists__
   - 修改CMakeLists，将接口库加入编译目标
   
   ```cmake
+  # CLion 2024.4 or older
   include_directories(${includes}
       Application/
       SPLIB/
@@ -54,6 +56,26 @@
       "SPLIB/*.c*"
   )
   ```
+
+  ```cmake
+  # CLion 2026
+   file(GLOB_RECURSE USER_SOURCE_FILES
+        ${CMAKE_SOURCE_DIR}/Application/*.c
+        ${CMAKE_SOURCE_DIR}/SPLIB/*.c
+   )
+   
+   # Add sources to executable
+   target_sources(${CMAKE_PROJECT_NAME} PRIVATE
+        ${USER_SOURCE_FILES}
+   )
+   
+   # Add include paths
+   target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
+        ${CMAKE_SOURCE_DIR}/Application/
+        ${CMAKE_SOURCE_DIR}/SPLIB/
+   )
+  ```
+
 - __裁剪接口库__
   - 在 `splib_config.h` 中配置项目所使用的驱动
   - 编译
@@ -66,7 +88,7 @@
   - Algorithm
     - [x] PID 控制器
     - [x] 轨迹规划器（sigmod曲线）
-    - [x] 滤波函数
+    - [ ] 滤波函数
   - Bsp
     - [x] CAN/FDCAN 通信模块
     - [x] UART 串口模块
@@ -74,14 +96,13 @@
     - [ ] I2C 驱动模块
     - [ ] SPI 驱动模块
   - Devices
+    - [x] 4-20mA采样数字输出模块
     - [x] Saber惯导模块
-    - [ ] 板间 CAN 通讯
-    - [ ] Dji M2006 电机
+    - [x] 板间 CAN 通讯
+    - [x] Dji M2006 电机
     - [x] Dji M3508 电机
     - [ ] Dji M6020 电机
     - [x] 大然电机
-    - [x] 激光测距模块(L1s)
-    - [x] SBUS 遥控器
     - [x] 灵足电机
     - [x] 陶晶驰串口屏 HMI
     - [x] 宇树电机
@@ -89,8 +110,6 @@
     - [x] 视觉串口通信 __（需根据与视觉组商定的数据协议自行修改）__
     - [x] VOFA 调试工具
     - [x] 维特 IMU (JY-ME01)
-    - [x] 维特 IMU (HWT906) 
-    - [ ] 4-20mA采样数字输出模块
     - [ ] Damiao 电机
   - Configer
     - [x] OpenOCD 配置文件
@@ -102,7 +121,7 @@
   - [ ] 轨迹规划器重规划
 - 项目文档
   - [x] README
-  - [ ] 代码注释补全
+  - [x] 代码注释补全
 
 ---
 

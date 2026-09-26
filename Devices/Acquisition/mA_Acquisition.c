@@ -54,7 +54,7 @@ uint16_t Acquisition_Decode(uint8_t* data);
 /* Private variables ---------------------------------------------------------*/
 ProtocolHandler acquisition_uart_FM= {
         .package_length = ACQUISITION_RECEIVE_PL,
-        .header = 0x01 << 8 | ACQUISITION_FUNC,
+        .header = 0x01 << 8 | ACQUISITION_FUNC, // 这里的0x01是设备地址，需要根据设备id配置
         .header_length = ACQUISITION_HEADER_LENGTH,
         .tail_flag = false,
         .callback = Acquisition_GetMessage,

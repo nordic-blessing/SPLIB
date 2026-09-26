@@ -108,4 +108,5 @@ uint8_t Unitree_extract_data(MotorData_t* motor_r)
 			return 0;
 //		}
 	}
+	return 1;
 }

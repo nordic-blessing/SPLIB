@@ -1,4 +1,11 @@
-#ifndef DEVICE_UNITREE_A1_PROTOCOL_H
+/**
+* @file a1_protocol.h
+ * @brief GO-M8010-6关节电机驱动 通讯协议&数据包
+ * @version 0.1
+ * @date 2022-03-04
+ *
+ * @copyright Copyright (c) unitree robotics .co.ltd. 2022
+ */#ifndef DEVICE_UNITREE_A1_PROTOCOL_H
 #define DEVICE_UNITREE_A1_PROTOCOL_H
 
 #include <stdint.h>

@@ -37,8 +37,9 @@ typedef struct {
     uint8_t id;
     uint16_t value;
 } Acquisition_t;
+
 /* Exported variables ---------------------------------------------------------*/
-extern Acquisition_t DT35_FM;
+extern Acquisition_t DT35_T;
 
 /* Exported function declarations ---------------------------------------------*/
 void Acquisition_GetValue(Acquisition_t* pAcquisition);

@@ -15,6 +15,9 @@
   @example
     - 初始化串口中断接收 : 调用`usart_IT_protocol_init()`，开启指定串口的字节中断接收
         `usart_IT_protocol_init()` // 开启已注册串口设备的中断接收
+    - 串口中断回调函数
+        `void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)` // 中断触发时系统自行调用
+    - 串口协议解析 ： 对接收的串口数据进行逐字节检验，在中断回调函数中
   ------------------------------------------------------------------------------
   @attention
     - 请根据项目更新`uart_IT_protocol_init()`和`HAL_UART_RxCpltCallback()`中的中
@@ -47,14 +50,11 @@
  * 串口开始中断接收
  */
 void uart_IT_protocol_init() {
-#if USE_SPLIB_ACQUISITION
-    HAL_UART_Receive_IT(&huart2, &acquisition_uart_FM.receive_byte, 1);
-#endif
-#if USE_SPLIB_VISUAL_UART
-    HAL_UART_Receive_IT(&huart4, &visual_uart.receive_byte, 1);
-#endif
 #if USE_SPLIB_VOFA_DEBUG
     HAL_UART_Receive_IT(&huart5, &vofa_debug.receive_byte, 1);
+#endif
+#if USE_SPLIB_ACQUISITION
+    HAL_UART_Receive_IT(&huart2, &acquisition_uart_wtx.receive_byte, 1);
 #endif
 }
 
@@ -63,38 +63,14 @@ void uart_IT_protocol_init() {
  * @param huart
  */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-/*
-#if USE_SPLIB_ATOMROBOTICS
-    uart_RX_decode(huart, &saber_uart);
-#endif
-#if USE_SPLIB_LASER_L1S
-    uart_RX_decode(huart, &Laser_L1s);
-#endif
-#if USE_SPLIB_REMOTER_SBUS
-    uart_RX_decode(huart, &remote_sbus);
-#endif
-#if USE_SPLIB_VOFA_DEBUG
-    uart_RX_decode(huart, &vofa_debug);
-#endif
-#if USE_SPLIB_VISUAL_UART
-    uart_RX_decode(huart, &visual_uart);
-#endif
-#if USE_SPLIB_WIT_JY_ME01
-    uart_RX_decode(huart, &Wit_JY_ME01);
-#endif
-*/
-    if (huart->Instance == USART2) {
-#if USE_SPLIB_ACQUISITION
-        uart_RX_decode(huart, &acquisition_uart_FM);/* 电流采集 */
-#endif
-    }
-    if (huart->Instance == UART4) {
-#if USE_SPLIB_VISUAL_UART
-        uart_RX_decode(huart, &visual_uart);/* 串口设备接收 */
-#endif
-    } else if (huart->Instance == UART5) {
+    if (huart->Instance == UART5) {
 #if USE_SPLIB_VOFA_DEBUG
         uart_RX_decode(huart, &vofa_debug);/* VOFA 串口调试 */
+#endif
+    }
+    if (huart->Instance == USART2) {
+#if USE_SPLIB_ACQUISITION
+        uart_RX_decode(huart, &acquisition_uart_wtx);
 #endif
     }
 }

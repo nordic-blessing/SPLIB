@@ -123,7 +123,8 @@ typedef struct {
 } RobStride_Motor;
 
 /* Exported variables --------------------------------------------------------*/
-extern RobStride_Motor EL05;
+extern RobStride_Motor EL05_Tripod;
+extern RobStride_Motor EL05_Switch;
 
 /* Exported function declarations --------------------------------------------*/
 void RobStride_Motor_Init(RobStride_Motor *motor, uint8_t CAN_Id);

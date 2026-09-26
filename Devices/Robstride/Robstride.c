@@ -61,7 +61,8 @@
 #define T_MAX 6.0f
 
 /* Private variables ---------------------------------------------------------*/
-RobStride_Motor EL05;
+RobStride_Motor EL05_Tripod;
+RobStride_Motor EL05_Switch;
 
 /* Private type --------------------------------------------------------------*/
 /* Private function declarations ---------------------------------------------*/
@@ -463,6 +464,8 @@ void RobStride_Motor_CSP_control(RobStride_Motor *motor, float Angle, float limi
         RobStride_Enable_Motor(motor);
     }
 
+    DELAY(1);
+    Set_RobStride_Motor_parameter(motor, 0X7017, motor->Motor_Set_All.set_limit_speed);
     DELAY(1);
     Set_RobStride_Motor_parameter(motor, 0X7017, motor->Motor_Set_All.set_limit_speed);
     DELAY(1);

@@ -3,7 +3,7 @@
 
 #include <string.h>
 #include "a1_protocol.h"
-#include "gom_protocol.h"
+#include "go_protocol.h"
 #include "crc_ccitt.h"
 
 enum MotorType{

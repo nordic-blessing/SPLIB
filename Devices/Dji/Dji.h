@@ -1,6 +1,25 @@
-//
-// Created by Icol_Lee on 2025/9/20.
-//
+/**
+  ******************************************************************************
+  @file     Dji.c
+  @brief    大疆电机CAN驱动
+  @author   Icol Boom <icolboom4@gmail.com>
+  @date     2024-09-20 (Created) | 2026-09-26 (Last modified)
+  @version  v1.0
+  ------------------------------------------------------------------------------
+  CHANGE LOG :
+    - 2024-09-20 [v1.0] Icol Boom: 创建初始版本，完成初步测试
+    - 2026-09-26 [v1.0] Icol Boom: 补全注释
+  ------------------------------------------------------------------------------
+  @attention
+  - 驱动依赖于`bsp_can.c/h`，请务必在`splib_config.h`中使能`USE_SPLIB_CAN`或
+        `USE_SPLIB_FDCAN`
+    - 修改代码后需同步更新版本号、最后修改日期及CHANGE LOG，请务必保证注释清晰明确地
+    让后人知晓如何使用该驱动
+  ******************************************************************************
+  Copyright (c) 2026 ~ -, Sichuan University Pangolin Robot Lab.
+  All rights reserved.
+  ******************************************************************************
+*/
 
 #ifndef DEVICE_M3508_H
 #define DEVICE_M3508_H
@@ -45,11 +64,12 @@ typedef struct{
 
 
 // 实例化
-extern DJI_t m3508_Switch;
+extern DJI_t m2006_aim;
 
-void m3508_init(DJI_t *ptr, uint8_t id, FDCAN_HandleTypeDef *hfdcan);
+void Dji_init(DJI_t *ptr, uint16_t id, FDCAN_HandleTypeDef *hfdcan);
 void m3508_receive(DJI_t *ptr, const uint8_t rx[8]);
-void m3508_send(DJI_t *ptr, int16_t iq);
+void m2006_receive(DJI_t *ptr, const uint8_t rx[8]);
+void Dji_send(DJI_t *ptr, int16_t iq);
 
 #endif //DEVICE_M3508_H
 

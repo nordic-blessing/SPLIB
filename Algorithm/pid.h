@@ -49,7 +49,9 @@ typedef struct {
 /* Exported types ------------------------------------------------------------*/
 /* Exported variables ---------------------------------------------------------*/
 // 实例化
-extern PID_t posSwitch;
+extern PID_t posAim;
+extern PID_t velAim;
+
 
 /* Exported function declarations ---------------------------------------------*/
 void initPID(PID_t* pid, float MAX_OUTPUT, float MAX_E_I, float deadZone);

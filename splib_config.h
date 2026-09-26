@@ -11,7 +11,6 @@
 #define USE_SPLIB_FDCAN             0
 #define USE_SPLIB_LED               0
 #define USE_SPLIB_UART              0
-#define USE_SPLIB_WDG               0
 
 /* Devices  -----------------------------------------------*/
 #define USE_SPLIB_ACQUISITION       0
@@ -19,8 +18,6 @@
 #define USE_SPLIB_CONMMAND          0
 #define USE_SPLIB_DJI               0
 #define USE_SPLIB_DREMPOWER         0
-#define USE_SPLIB_LASER_L1S         0
-#define USE_SPLIB_REMOTER_SBUS      0
 #define USE_SPLIB_ROBOSTRIDE        0
 #define USE_SPLIB_TJC_UART          0
 #define USE_SPLIB_UNITREE           0
@@ -29,7 +26,6 @@
 #define USE_SPLIB_VOFA_DEBUG        0
 #define USE_SPLIB_VOFA_PRINTF       0
 #define USE_SPLIB_WIT_JY_ME01       0
-#define USE_SPLIB_WIT_HWT906        0
 #define USE_SPLIB_WS2812            0
 
 
@@ -55,9 +51,6 @@
 #if USE_SPLIB_UART
     #include "BSP/bsp_uart.h"
 #endif
-#if USE_SPLIB_WDG
-    #include "Bsp/bsp_wdg.h"
-#endif
 /* Bsp header end */
 
 /* Devices header begin */
@@ -71,16 +64,10 @@
     #include "Devices/Commander/command_can.h"
 #endif
 #if USE_SPLIB_DJI
-    #include "Devices/Dji/M3508.h"
+    #include "Devices/Dji/Dji.h"
 #endif
 #if USE_SPLIB_DREMPOWER
     #include "Devices/DrEmpower/DrEmpower_can.h"
-#endif
-#if USE_SPLIB_LASER_L1S
-    #include "Devices/Laser/Laser_L1s.h"
-#endif
-#if USE_SPLIB_REMOTER_SBUS
-    #include "Devices/Remoter/sbus.h"
 #endif
 #if USE_SPLIB_ROBOSTRIDE
     #include "Devices/Robstride/Robstride.h"
@@ -89,7 +76,7 @@
     #include "Devices/TJC/tjc_uart_hmi.h"
 #endif
 #if USE_SPLIB_UNITREE
-    #include "Devices/Unitree/MotorOutput.h"
+    #include "Devices/Unitree/Unitree_uart.h"
 #endif
 #if USE_SPLIB_VESC
     #include "Devices/VESC/VESC.h"
@@ -105,9 +92,6 @@
 #endif
 #if USE_SPLIB_WIT_JY_ME01
     #include "Devices/Wit/JY-ME01.h"
-#endif
-#if USE_SPLIB_WIT_HWT906
-    #include "Devices/Wit/HWT906.h"
 #endif
 #if USE_SPLIB_WS2812
     #include "Devices/WS2812/WS2812B.h"

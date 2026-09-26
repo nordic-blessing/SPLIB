@@ -51,12 +51,6 @@ typedef struct {
 #if USE_SPLIB_ATOMROBOTICS
     extern ProtocolHandler saber_uart;
 #endif
-#if USE_SPLIB_LASER_L1S
-    extern ProtocolHandler Laser_L1s;
-#endif
-#if USE_SPLIB_REMOTER_SBUS
-    extern ProtocolHandler remote_sbus;
-#endif
 #if USE_SPLIB_VOFA_DEBUG
     extern ProtocolHandler vofa_debug;
 #endif

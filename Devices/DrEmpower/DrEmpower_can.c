@@ -69,7 +69,7 @@ union float_hex Dr_f_h;
  * @param mode  模式 1：跟随；2：梯形； 3：前馈力矩
  * @param angle 目标角度
  * @param speed 转速
- * @param param mode=1 ： 输入滤波带宽； mode = 2 ： 角加速度 ； mode = 2 ： 力矩
+ * @param param mode=1 ： 输入滤波带宽； mode = 2 ： 角加速度 ； mode = 3 ： 力矩
  */
 void DrEmpower_Set_Angle(uint8_t id, float angle, uint16_t speed, uint16_t param, uint8_t mode) {
     uint8_t CAN_ID = id;

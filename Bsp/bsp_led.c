@@ -61,13 +61,13 @@ uint8_t led_num = sizeof(led) / sizeof(led[0]);
 void LEDInit(void) {
     for (uint8_t i = 0; i < led_num; i++) {
         SetLEDState(i, LED_ON);
-        DELAY(140);
+        DELAY(100);
     }
 
     for (int j = 0; j < 5; j++) {
         for (uint8_t i = 0; i < led_num; i++) {
             ToggleLED(i);
-            DELAY(70);
+            DELAY(20);
         }
     }
 
@@ -77,12 +77,13 @@ void LEDInit(void) {
         for (uint8_t i = 0; i < led_num; i++) {
             ToggleLED(i);
         }
-        DELAY(140);
+        DELAY(60);
     }
 
     for (uint8_t i = 0; i < led_num; i++) {
         SetLEDState(i, LED_OFF);
     }
+    // 总时长：1000ms
 }
 
 /**
